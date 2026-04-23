@@ -11,7 +11,10 @@ const client = postgres(env.DATABASE_URL, {
 	max: env.NODE_ENV === 'production' ? 1 : 10,
 	idle_timeout: 20,
 	connect_timeout: 10,
-	ssl: requiresSsl ? 'require' : undefined
+	ssl: requiresSsl ? 'require' : undefined,
+	// PgBouncer (Neon pooler) in transaction mode doesn't support persistent
+	// prepared statements. Disable them to avoid hanging queries.
+	prepare: false
 });
 
 export const db = drizzle(client, { schema });
