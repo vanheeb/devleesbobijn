@@ -4,8 +4,8 @@
 			<!-- Brand -->
 			<div>
 				<h3 class="text-white font-bold text-lg mb-3 flex items-center gap-2">
-					<img src="/images/logo.png" alt="De Vleesbobijn" class="h-8 w-8 rounded-full" />
-					De Vleesbobijn
+					<img src="/images/logo.png" alt="de vleesbobijn" class="h-8 w-8 rounded-full" />
+					de vleesbobijn
 				</h3>
 				<p class="text-sm leading-relaxed">
 					Het unieke feestconcept voor thuis. Huur een pitta/kebab-grill en
@@ -44,7 +44,7 @@
 		</div>
 
 		<div class="border-t border-gray-800 mt-8 pt-8 text-sm text-center text-gray-500">
-			<p>&copy; {new Date().getFullYear()} De Vleesbobijn. Alle prijzen zijn vrijgesteld van BTW.</p>
+			<p>&copy; {new Date().getFullYear()} de vleesbobijn. Alle prijzen zijn vrijgesteld van BTW.</p>
 		</div>
 	</div>
 </footer>

@@ -9,7 +9,7 @@
 </script>
 
 <svelte:head>
-	<title>Aanbod & Prijzen - De Vleesbobijn</title>
+	<title>Aanbod & Prijzen - de vleesbobijn</title>
 </svelte:head>
 
 <div class="max-w-6xl mx-auto px-4 py-12">
@@ -22,8 +22,8 @@
 
 	<!-- Product images -->
 	<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-		<img src="/images/prijs-kip.webp" alt="Kip prijslijst De Vleesbobijn" class="w-full rounded-2xl shadow-lg" />
-		<img src="/images/prijs-kebab.webp" alt="Kebab prijslijst De Vleesbobijn" class="w-full rounded-2xl shadow-lg" />
+		<img src="/images/prijs-kip.webp" alt="Kip prijslijst de vleesbobijn" class="w-full rounded-2xl shadow-lg" />
+		<img src="/images/prijs-kebab.webp" alt="Kebab prijslijst de vleesbobijn" class="w-full rounded-2xl shadow-lg" />
 	</div>
 
 	<!-- Chicken packages -->

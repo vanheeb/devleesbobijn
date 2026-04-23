@@ -1,6 +1,6 @@
 <svelte:head>
-	<title>Privacyverklaring - De Vleesbobijn</title>
-	<meta name="description" content="Privacyverklaring van De Vleesbobijn: welke gegevens we verzamelen en waarvoor." />
+	<title>Privacyverklaring - de vleesbobijn</title>
+	<meta name="description" content="Privacyverklaring van de vleesbobijn: welke gegevens we verzamelen en waarvoor." />
 </svelte:head>
 
 <div class="max-w-3xl mx-auto px-4 py-12 prose prose-p:leading-relaxed">
@@ -8,7 +8,7 @@
 	<p class="text-gray-600 mb-8">Laatste update: 23 april 2026</p>
 
 	<h2 class="text-xl font-bold mt-8 mb-2">1. Verantwoordelijke</h2>
-	<p>De Vleesbobijn, Achterstraat 20, 8540 Deerlijk. Contact: <a href="mailto:devleesbobijn@gmail.com" class="text-primary">devleesbobijn@gmail.com</a>.</p>
+	<p>de vleesbobijn, Achterstraat 20, 8540 Deerlijk. Contact: <a href="mailto:devleesbobijn@gmail.com" class="text-primary">devleesbobijn@gmail.com</a>.</p>
 
 	<h2 class="text-xl font-bold mt-8 mb-2">2. Welke gegevens verzamelen we?</h2>
 	<p>Enkel de gegevens die je zelf invult bij een boeking of contactformulier: naam, e-mail, telefoonnummer, adres, type feest en aantal gasten. Bij betaling verwerkt Stripe je kaartgegevens — wij zien of bewaren die nooit.</p>

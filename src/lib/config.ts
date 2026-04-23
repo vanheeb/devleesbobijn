@@ -11,7 +11,7 @@
 // Client-safe defaults (these values are safe to expose in the browser).
 // For server-only env, import from $lib/server/env instead.
 export const businessConfig = {
-	name: 'De Vleesbobijn',
+	name: 'de vleesbobijn',
 	tagline: 'Het unieke feestconcept voor thuis',
 	address: {
 		street: 'Achterstraat 20',

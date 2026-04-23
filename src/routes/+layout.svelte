@@ -9,8 +9,8 @@
 <svelte:head>
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
-	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-	<title>De Vleesbobijn - Het unieke feestconcept voor thuis</title>
+	<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400&display=swap" rel="stylesheet" />
+	<title>de vleesbobijn - Het unieke feestconcept voor thuis</title>
 	<meta name="description" content="Huur een pitta/kebab-grill voor jouw feest. Compleet pakket met vlees, broodjes en toebehoren. Vanaf €250 voor 15-20 personen." />
 </svelte:head>
 

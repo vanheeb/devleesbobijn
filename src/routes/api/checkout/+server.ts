@@ -1,7 +1,7 @@
 import { json } from '@sveltejs/kit';
 import { db } from '$lib/server/db';
 import { bookings, bookingExtras, packages, extras, grills, blockedDates } from '$lib/server/db/schema';
-import { eq, and, notInArray, sql, gte } from 'drizzle-orm';
+import { eq, and, notInArray, inArray, sql, gte } from 'drizzle-orm';
 import { stripe } from '$lib/server/stripe';
 import { env } from '$lib/server/env';
 import { pricingConfig, bookingConfig } from '$lib/config';
@@ -137,7 +137,7 @@ export async function POST({ request, url }) {
 			const fetchedExtras = await tx
 				.select()
 				.from(extras)
-				.where(sql`${extras.id} = ANY(${extraIds})`);
+				.where(inArray(extras.id, extraIds));
 			for (const item of data.extras) {
 				const extra = fetchedExtras.find((e) => e.id === item.extraId);
 				if (extra && extra.active) {

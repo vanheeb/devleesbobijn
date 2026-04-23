@@ -1,11 +1,11 @@
 <svelte:head>
-	<title>Over ons - De Vleesbobijn</title>
+	<title>Over ons - de vleesbobijn</title>
 </svelte:head>
 
 <div class="max-w-4xl mx-auto px-4 py-12">
 	<div class="text-center mb-12">
-		<img src="/images/logo.png" alt="De Vleesbobijn" class="h-24 w-24 rounded-full mx-auto mb-4 border-4 border-secondary" />
-		<h1 class="text-3xl md:text-4xl font-bold mb-4">Over De Vleesbobijn</h1>
+		<img src="/images/logo.png" alt="de vleesbobijn" class="h-24 w-24 rounded-full mx-auto mb-4 border-4 border-secondary" />
+		<h1 class="text-3xl md:text-4xl font-bold mb-4">Over de vleesbobijn</h1>
 		<p class="text-gray-600 text-lg">Het unieke feestconcept voor thuis</p>
 	</div>
 
@@ -21,7 +21,7 @@
 		<div class="bg-white rounded-2xl p-8 border mb-8">
 			<h2 class="text-2xl font-bold mb-4">Ons verhaal</h2>
 			<p class="text-gray-700 leading-relaxed mb-4">
-				De Vleesbobijn is ontstaan vanuit een simpel idee: wat als je de gezelligheid van een
+				de vleesbobijn is ontstaan vanuit een simpel idee: wat als je de gezelligheid van een
 				pitta/kebab-zaak naar je eigen feest kon brengen? Geen gedoe met catering, geen dure kok,
 				maar een interactieve belevenis waar je gasten zelf aan de slag gaan.
 			</p>

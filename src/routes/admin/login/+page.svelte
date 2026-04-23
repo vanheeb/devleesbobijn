@@ -5,7 +5,7 @@
 </script>
 
 <svelte:head>
-	<title>Admin Login - De Vleesbobijn</title>
+	<title>Admin Login - de vleesbobijn</title>
 </svelte:head>
 
 <div class="min-h-[70vh] flex items-center justify-center px-4">
@@ -13,7 +13,7 @@
 		<div class="text-center mb-8">
 			<span class="text-4xl">🍖</span>
 			<h1 class="text-2xl font-bold mt-2">Admin Login</h1>
-			<p class="text-gray-500 text-sm">De Vleesbobijn beheer</p>
+			<p class="text-gray-500 text-sm">de vleesbobijn beheer</p>
 		</div>
 
 		{#if form?.error}

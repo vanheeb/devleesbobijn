@@ -7,7 +7,7 @@
 </script>
 
 <svelte:head>
-	<title>Bevestiging #{b.reference} - De Vleesbobijn</title>
+	<title>Bevestiging #{b.reference} - de vleesbobijn</title>
 </svelte:head>
 
 <div class="max-w-2xl mx-auto px-4 py-12">

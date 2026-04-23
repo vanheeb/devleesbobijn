@@ -93,14 +93,14 @@ export async function sendBookingConfirmation(booking: Booking) {
 </ul>
 
 <p style="margin:24px 0 0;">Vragen? Bel ons op <a href="tel:${businessConfig.phone}" style="color:#7B2D8E;">${businessConfig.phone}</a>.</p>
-<p style="margin:16px 0 0;">Smakelijk feest!<br/><em>Team De Vleesbobijn</em></p>
+<p style="margin:16px 0 0;">Smakelijk feest!<br/><em>Team de vleesbobijn</em></p>
 `,
 		{ title: `Bevestiging - ${booking.reference}`, preview: `Je boeking ${booking.reference} is bevestigd.` }
 	);
 
 	await send({
 		to: booking.customerEmail,
-		subject: `✅ Bevestiging - De Vleesbobijn #${booking.reference}`,
+		subject: `✅ Bevestiging - de vleesbobijn #${booking.reference}`,
 		html
 	});
 
@@ -126,7 +126,7 @@ export async function sendPickupReminder(booking: Booking) {
 <p>Een kleine herinnering dat je boeking <strong>${booking.reference}</strong> op <strong>${formatDate(booking.rentalDate)}</strong> gepland staat.</p>
 <p>Je kan de grill ophalen op:<br/><strong>${businessConfig.address.full}</strong></p>
 <p>Vergeet je verse groenten niet mee te nemen vóór het feest!</p>
-<p>Tot dan,<br/><em>Team De Vleesbobijn</em></p>`,
+<p>Tot dan,<br/><em>Team de vleesbobijn</em></p>`,
 		{ title: `Herinnering - ${booking.reference}` }
 	);
 	await send({
@@ -142,7 +142,7 @@ export async function sendReturnReminder(booking: Booking) {
 <p>Dag ${booking.customerName},</p>
 <p>We hopen dat je feest een succes was! Vergeet niet de grill <strong>proper gereinigd</strong> terug te brengen naar ${businessConfig.address.full}.</p>
 <p>Dan storten we je waarborg van ${formatPrice(pricingConfig.depositCents)} snel terug.</p>
-<p>Bedankt!<br/><em>Team De Vleesbobijn</em></p>`,
+<p>Bedankt!<br/><em>Team de vleesbobijn</em></p>`,
 		{ title: `Teruggave - ${booking.reference}` }
 	);
 	await send({
@@ -186,12 +186,12 @@ export async function sendContactAutoReply(payload: { name: string; email: strin
 		`<h2 style="margin:0 0 16px;color:#7B2D8E;">Bedankt voor je bericht, ${payload.name}!</h2>
 <p>We hebben je bericht goed ontvangen en nemen binnen 24 uur contact met je op.</p>
 <p>Moet het dringender? Bel ons gerust op <a href="tel:${businessConfig.phone}" style="color:#7B2D8E;">${businessConfig.phone}</a>.</p>
-<p>Tot snel,<br/><em>Team De Vleesbobijn</em></p>`,
+<p>Tot snel,<br/><em>Team de vleesbobijn</em></p>`,
 		{ title: 'We hebben je bericht ontvangen' }
 	);
 	await send({
 		to: payload.email,
-		subject: `Bedankt voor je bericht - De Vleesbobijn`,
+		subject: `Bedankt voor je bericht - de vleesbobijn`,
 		html
 	});
 }

@@ -4,7 +4,7 @@
 	let mobileOpen = $state(false);
 
 	const links = [
-		{ href: '/', label: 'Home' },
+		{ href: '/', label: 'de vleesbobijn' },
 		{ href: '/aanbod', label: 'Aanbod' },
 		{ href: '/boeken', label: 'Boeken' },
 		{ href: '/faq', label: 'FAQ' },
@@ -20,9 +20,9 @@
 
 <header class="bg-white shadow-sm sticky top-0 z-50">
 	<nav class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-		<a href="/" class="flex items-center gap-2 font-bold text-xl text-primary">
-			<img src="/images/logo.png" alt="De Vleesbobijn" class="h-10 w-10 rounded-full object-cover" />
-			<span>De Vleesbobijn</span>
+		<a href="/" class="flex items-center gap-2 text-xl text-primary">
+			<img src="/images/logo.png" alt="de vleesbobijn" class="h-10 w-10 rounded-full object-cover" />
+			<span class="font-display tracking-wide">de vleesbobijn</span>
 		</a>
 
 		<!-- Desktop nav -->
@@ -88,7 +88,7 @@
 					<a
 						href="/boeken"
 						onclick={() => (mobileOpen = false)}
-						class="block text-center bg-secondary hover:bg-secondary-dark text-white px-4 py-2 rounded-lg text-sm font-bold"
+						class="block text-center bg-secondary hover:bg-secondary-dark text-primary-dark px-4 py-2 rounded-lg text-sm font-bold"
 					>
 						Nu boeken
 					</a>

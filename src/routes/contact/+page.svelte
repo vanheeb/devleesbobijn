@@ -5,7 +5,7 @@
 </script>
 
 <svelte:head>
-	<title>Contact - De Vleesbobijn</title>
+	<title>Contact - de vleesbobijn</title>
 </svelte:head>
 
 <div class="max-w-6xl mx-auto px-4 py-12">

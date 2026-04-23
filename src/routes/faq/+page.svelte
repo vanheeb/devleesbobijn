@@ -1,8 +1,8 @@
 <script lang="ts">
 	const faqs = [
 		{
-			q: 'Wat is De Vleesbobijn?',
-			a: 'De Vleesbobijn is een origineel totaalconcept dat instaat voor de verhuur van een pitta/kebab-grill met vlees, broodjes, gas en al het nodige materiaal inbegrepen.'
+			q: 'Wat is de vleesbobijn?',
+			a: 'de vleesbobijn is een origineel totaalconcept dat instaat voor de verhuur van een pitta/kebab-grill met vlees, broodjes, gas en al het nodige materiaal inbegrepen.'
 		},
 		{
 			q: 'Wie doet het kookwerk?',
@@ -58,13 +58,13 @@
 </script>
 
 <svelte:head>
-	<title>Veelgestelde vragen - De Vleesbobijn</title>
+	<title>Veelgestelde vragen - de vleesbobijn</title>
 </svelte:head>
 
 <div class="max-w-3xl mx-auto px-4 py-12">
 	<div class="text-center mb-12">
 		<h1 class="text-3xl md:text-4xl font-bold mb-4">Veelgestelde vragen</h1>
-		<p class="text-gray-600">Alles wat je moet weten over De Vleesbobijn</p>
+		<p class="text-gray-600">Alles wat je moet weten over de vleesbobijn</p>
 	</div>
 
 	<div class="space-y-3">

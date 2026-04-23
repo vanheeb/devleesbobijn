@@ -1,6 +1,6 @@
 <svelte:head>
-	<title>Huurvoorwaarden - De Vleesbobijn</title>
-	<meta name="description" content="Huurvoorwaarden voor de verhuur van pitta/kebab-grills bij De Vleesbobijn." />
+	<title>Huurvoorwaarden - de vleesbobijn</title>
+	<meta name="description" content="Huurvoorwaarden voor de verhuur van pitta/kebab-grills bij de vleesbobijn." />
 </svelte:head>
 
 <div class="max-w-3xl mx-auto px-4 py-12 prose prose-p:leading-relaxed">

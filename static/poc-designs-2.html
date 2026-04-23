@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>POC Designs 2 — de vleesbobijn</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Oswald', sans-serif; background: #111; }
+
+.label {
+  background: #222;
+  color: #fff;
+  font-family: 'Oswald', sans-serif;
+  font-size: 13px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 10px 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.label span { background: #7c08b3; color: #fff; padding: 2px 10px; border-radius: 4px; font-size: 11px; }
+.sep { height: 5px; background: #111; }
+
+/* ═══════════════════════════════════════════════
+   RICHTING 4 — BENTO GRID (trendy 2026)
+═══════════════════════════════════════════════ */
+.r4 { background: #f5f0ff; }
+
+.r4-nav {
+  background: #fff;
+  padding: 14px 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #e8ddf5;
+}
+.r4-nav-logo { display: flex; align-items: center; gap: 10px; }
+.r4-nav-logo img { width: 34px; height: 34px; border-radius: 50%; }
+.r4-nav-brand { color: #7c08b3; font-family: Impact, Arial, sans-serif; font-size: 19px; letter-spacing: 2px; }
+.r4-nav-links { display: flex; gap: 4px; }
+.r4-nav-links a { color: #555; text-decoration: none; font-size: 13px; padding: 6px 14px; border-radius: 20px; letter-spacing: 1px; }
+.r4-nav-links a:hover { background: #f5f0ff; color: #7c08b3; }
+.r4-nav-cta { background: #7c08b3; color: #ffdc82; font-family: Impact, Arial, sans-serif; font-size: 13px; padding: 9px 24px; border-radius: 20px; text-decoration: none; letter-spacing: 2px; }
+
+/* Bento grid */
+.r4-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: 200px 200px;
+  gap: 12px;
+  padding: 20px 50px;
+}
+
+/* Cel 1: grote hero foto — col 1-7, row 1-2 */
+.r4-cell-hero {
+  grid-column: 1 / 8;
+  grid-row: 1 / 3;
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+}
+.r4-cell-hero img { width: 100%; height: 100%; object-fit: cover; }
+.r4-cell-hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(92,6,133,0.85) 0%, transparent 55%);
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 30px;
+}
+.r4-cell-hero h1 {
+  font-family: Impact, sans-serif;
+  font-size: 44px; line-height: 1;
+  color: #fff; letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+.r4-cell-hero h1 em { color: #ffdc82; font-style: normal; }
+.r4-cell-hero p { color: rgba(255,255,255,0.8); font-size: 13px; font-weight: 300; margin-bottom: 18px; max-width: 300px; line-height: 1.6; }
+.r4-cell-hero-btns { display: flex; gap: 10px; }
+.r4-btn-y { background: #ffdc82; color: #5c0685; font-family: Impact, sans-serif; font-size: 14px; letter-spacing: 2px; padding: 10px 24px; border-radius: 10px; text-decoration: none; }
+.r4-btn-w { background: rgba(255,255,255,0.15); color: #fff; font-family: Impact, sans-serif; font-size: 14px; letter-spacing: 2px; padding: 10px 24px; border-radius: 10px; text-decoration: none; border: 1px solid rgba(255,255,255,0.3); }
+
+/* Cel 2: paarse kaart — col 8-10, row 1 */
+.r4-cell-purple {
+  grid-column: 8 / 11;
+  grid-row: 1;
+  background: #7c08b3;
+  border-radius: 20px;
+  padding: 28px;
+  display: flex; flex-direction: column; justify-content: space-between;
+}
+.r4-cell-purple .icon { font-size: 32px; }
+.r4-cell-purple h3 { font-family: Impact, sans-serif; font-size: 20px; color: #ffdc82; letter-spacing: 1px; margin-bottom: 6px; }
+.r4-cell-purple p { color: rgba(255,255,255,0.75); font-size: 12px; font-weight: 300; line-height: 1.6; }
+
+/* Cel 3: gele kaart — col 11-13, row 1 */
+.r4-cell-yellow {
+  grid-column: 11 / 13;
+  grid-row: 1;
+  background: #ffdc82;
+  border-radius: 20px;
+  padding: 28px;
+  display: flex; flex-direction: column; justify-content: space-between;
+}
+.r4-cell-yellow .icon { font-size: 32px; }
+.r4-cell-yellow h3 { font-family: Impact, sans-serif; font-size: 20px; color: #5c0685; letter-spacing: 1px; margin-bottom: 6px; }
+.r4-cell-yellow p { color: rgba(92,6,133,0.7); font-size: 12px; font-weight: 300; line-height: 1.6; }
+
+/* Cel 4: foto klein — col 8-10, row 2 */
+.r4-cell-img {
+  grid-column: 8 / 11;
+  grid-row: 2;
+  border-radius: 20px;
+  overflow: hidden;
+}
+.r4-cell-img img { width: 100%; height: 100%; object-fit: cover; }
+
+/* Cel 5: wit + tagline — col 11-13, row 2 */
+.r4-cell-tagline {
+  grid-column: 11 / 13;
+  grid-row: 2;
+  background: #fff;
+  border-radius: 20px;
+  padding: 28px;
+  display: flex; flex-direction: column; justify-content: center;
+  border: 2px solid #e8ddf5;
+}
+.r4-cell-tagline .tag { font-size: 10px; letter-spacing: 3px; color: #7c08b3; text-transform: uppercase; margin-bottom: 10px; }
+.r4-cell-tagline p { font-family: Impact, sans-serif; font-size: 18px; color: #1a0a24; line-height: 1.3; letter-spacing: 1px; }
+.r4-cell-tagline p em { color: #7c08b3; font-style: normal; }
+
+
+/* ═══════════════════════════════════════════════
+   RICHTING 5 — FULL IMMERSIVE (foto dominant)
+═══════════════════════════════════════════════ */
+.r5 { position: relative; }
+
+.r5-hero {
+  position: relative;
+  height: 520px;
+  overflow: hidden;
+}
+.r5-hero img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: brightness(0.55) saturate(1.1);
+}
+
+/* Nav overlay */
+.r5-nav {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  padding: 22px 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 10;
+}
+.r5-nav-logo { display: flex; align-items: center; gap: 12px; }
+.r5-nav-logo img { width: 38px; height: 38px; border-radius: 50%; border: 2px solid #ffdc82; }
+.r5-nav-brand { color: #fff; font-family: Impact, Arial, sans-serif; font-size: 20px; letter-spacing: 3px; }
+.r5-nav-links { display: flex; gap: 2px; }
+.r5-nav-links a { color: rgba(255,255,255,0.65); text-decoration: none; font-size: 12px; padding: 7px 16px; letter-spacing: 2px; text-transform: uppercase; border-radius: 6px; }
+.r5-nav-links a:hover { color: #fff; background: rgba(255,255,255,0.1); }
+.r5-nav-cta { background: transparent; color: #ffdc82; font-family: Impact, Arial, sans-serif; font-size: 12px; padding: 9px 24px; border-radius: 8px; text-decoration: none; letter-spacing: 3px; border: 2px solid #ffdc82; }
+
+/* Center content */
+.r5-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  z-index: 5;
+  padding: 0 40px;
+}
+.r5-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: #ffdc82;
+  font-size: 11px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.r5-eyebrow::before, .r5-eyebrow::after { content: ''; width: 50px; height: 1px; background: #ffdc82; }
+
+.r5-h1 {
+  font-family: Impact, 'Arial Narrow', sans-serif;
+  font-size: 80px;
+  line-height: 0.95;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin-bottom: 20px;
+  text-shadow: 0 4px 30px rgba(0,0,0,0.3);
+}
+.r5-h1 em { color: #ffdc82; font-style: normal; display: block; }
+
+.r5-sub {
+  color: rgba(255,255,255,0.75);
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.8;
+  max-width: 480px;
+  margin-bottom: 36px;
+}
+.r5-btns { display: flex; gap: 14px; }
+.r5-btn-primary {
+  background: #7c08b3;
+  color: #ffdc82;
+  font-family: Impact, sans-serif;
+  font-size: 15px;
+  letter-spacing: 3px;
+  padding: 15px 40px;
+  border-radius: 4px;
+  text-decoration: none;
+  text-transform: uppercase;
+  box-shadow: 0 8px 40px rgba(124,8,179,0.5);
+}
+.r5-btn-secondary {
+  background: transparent;
+  color: #fff;
+  font-family: Impact, sans-serif;
+  font-size: 15px;
+  letter-spacing: 3px;
+  padding: 15px 40px;
+  border-radius: 4px;
+  text-decoration: none;
+  text-transform: uppercase;
+  border: 2px solid rgba(255,255,255,0.35);
+}
+
+/* Bottom strip */
+.r5-strip {
+  background: #7c08b3;
+  padding: 0 60px;
+  display: flex;
+  align-items: stretch;
+}
+.r5-strip-item {
+  flex: 1;
+  padding: 20px 0;
+  border-right: 1px solid rgba(255,255,255,0.15);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-left: 30px;
+}
+.r5-strip-item:first-child { padding-left: 0; }
+.r5-strip-item:last-child { border-right: none; }
+.r5-strip-icon { font-size: 22px; }
+.r5-strip-text h4 { font-family: Impact, sans-serif; font-size: 14px; color: #ffdc82; letter-spacing: 2px; margin-bottom: 2px; }
+.r5-strip-text p { font-size: 11px; color: rgba(255,255,255,0.6); font-weight: 300; letter-spacing: 1px; }
+
+
+/* ═══════════════════════════════════════════════
+   RICHTING 6 — GLASSMORPHISM / MODERN
+═══════════════════════════════════════════════ */
+.r6 {
+  position: relative;
+  background: #1a0a2e;
+  overflow: hidden;
+}
+
+/* Achtergrond foto */
+.r6-bg {
+  position: absolute;
+  inset: 0;
+}
+.r6-bg img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: 0.3;
+  filter: saturate(0.6);
+}
+/* gradient blobs */
+.r6-blob1 {
+  position: absolute;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(124,8,179,0.5) 0%, transparent 70%);
+  top: -100px; left: -100px;
+}
+.r6-blob2 {
+  position: absolute;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(255,220,130,0.15) 0%, transparent 70%);
+  bottom: -80px; right: 200px;
+}
+
+.r6-content {
+  position: relative;
+  z-index: 5;
+}
+
+/* Nav glass */
+.r6-nav {
+  padding: 18px 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255,255,255,0.04);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.r6-nav-logo { display: flex; align-items: center; gap: 10px; }
+.r6-nav-logo img { width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(255,220,130,0.5); }
+.r6-nav-brand { color: #fff; font-family: Impact, Arial, sans-serif; font-size: 19px; letter-spacing: 3px; }
+.r6-nav-links { display: flex; gap: 2px; }
+.r6-nav-links a { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 12px; padding: 7px 16px; letter-spacing: 2px; border-radius: 8px; }
+.r6-nav-links a:hover { color: #fff; background: rgba(255,255,255,0.06); }
+.r6-nav-cta {
+  background: rgba(124,8,179,0.5);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(124,8,179,0.8);
+  color: #ffdc82;
+  font-family: Impact, Arial, sans-serif;
+  font-size: 12px;
+  padding: 9px 22px;
+  border-radius: 10px;
+  text-decoration: none;
+  letter-spacing: 2px;
+}
+
+/* Main layout */
+.r6-main {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 30px;
+  padding: 50px 60px;
+  min-height: 400px;
+}
+
+.r6-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.r6-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,220,130,0.12);
+  border: 1px solid rgba(255,220,130,0.3);
+  color: #ffdc82;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 20px;
+  width: fit-content;
+  margin-bottom: 24px;
+}
+.r6-badge-dot { width: 6px; height: 6px; background: #ffdc82; border-radius: 50%; }
+
+.r6-h1 {
+  font-family: Impact, 'Arial Narrow', sans-serif;
+  font-size: 62px; line-height: 1;
+  color: #fff;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+}
+.r6-h1 em {
+  background: linear-gradient(135deg, #ffdc82, #f5a623);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-style: normal;
+  display: block;
+}
+
+.r6-sub {
+  color: rgba(255,255,255,0.55);
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.85;
+  max-width: 400px;
+  margin-bottom: 36px;
+}
+
+.r6-btns { display: flex; gap: 12px; }
+.r6-btn-primary {
+  background: linear-gradient(135deg, #7c08b3, #a020d4);
+  color: #ffdc82;
+  font-family: Impact, sans-serif;
+  font-size: 14px;
+  letter-spacing: 2px;
+  padding: 13px 32px;
+  border-radius: 12px;
+  text-decoration: none;
+  box-shadow: 0 8px 32px rgba(124,8,179,0.45), inset 0 1px 0 rgba(255,255,255,0.1);
+}
+.r6-btn-secondary {
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #fff;
+  font-family: Impact, sans-serif;
+  font-size: 14px;
+  letter-spacing: 2px;
+  padding: 13px 32px;
+  border-radius: 12px;
+  text-decoration: none;
+}
+
+/* Glass card rechts */
+.r6-card {
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(24px);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 24px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.r6-card-item { display: flex; gap: 16px; align-items: flex-start; }
+.r6-card-icon {
+  width: 44px; height: 44px;
+  background: rgba(124,8,179,0.3);
+  border: 1px solid rgba(124,8,179,0.5);
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+.r6-card-text h4 { font-family: Impact, sans-serif; font-size: 15px; color: #fff; letter-spacing: 1px; margin-bottom: 4px; }
+.r6-card-text p { font-size: 12px; color: rgba(255,255,255,0.45); font-weight: 300; line-height: 1.6; }
+.r6-card-divider { height: 1px; background: rgba(255,255,255,0.07); }
+.r6-cta-card {
+  background: linear-gradient(135deg, rgba(124,8,179,0.4), rgba(160,32,212,0.2));
+  border: 1px solid rgba(124,8,179,0.5);
+  border-radius: 14px;
+  padding: 18px 20px;
+  text-align: center;
+  margin-top: auto;
+}
+.r6-cta-card p { font-size: 11px; color: rgba(255,255,255,0.5); letter-spacing: 1px; margin-bottom: 10px; }
+.r6-cta-card a {
+  display: block;
+  background: #ffdc82;
+  color: #5c0685;
+  font-family: Impact, sans-serif;
+  font-size: 14px;
+  letter-spacing: 2px;
+  padding: 11px;
+  border-radius: 10px;
+  text-decoration: none;
+}
+</style>
+</head>
+<body>
+
+<!-- ══════ RICHTING 4: BENTO GRID ══════ -->
+<div class="label">
+  Richting 4 <span>Bento Grid</span> — Asymmetrische kaarten, trendy 2026 grid-stijl
+</div>
+<div class="r4">
+  <div class="r4-nav">
+    <div class="r4-nav-logo">
+      <img src="/images/logo.png" alt="logo">
+      <span class="r4-nav-brand">de vleesbobijn</span>
+    </div>
+    <div class="r4-nav-links">
+      <a href="#">de vleesbobijn</a>
+      <a href="#">Aanbod</a>
+      <a href="#">Boeken</a>
+      <a href="#">FAQ</a>
+      <a href="#">Contact</a>
+    </div>
+    <a href="#" class="r4-nav-cta">NU BOEKEN</a>
+  </div>
+
+  <div class="r4-grid">
+    <!-- Hero foto groot -->
+    <div class="r4-cell-hero">
+      <img src="/images/hero-3.webp" alt="">
+      <div class="r4-cell-hero-overlay">
+        <h1>Het unieke feestje<br><em>voor bij je thuis.</em></h1>
+        <p>De vleesbobijn is het totaalconcept voor een geslaagd feest. Bereid zelf de heerlijkste pita's op elke locatie.</p>
+        <div class="r4-cell-hero-btns">
+          <a href="#" class="r4-btn-y">NU BOEKEN</a>
+          <a href="#" class="r4-btn-w">CONTACT</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paarse kaart -->
+    <div class="r4-cell-purple">
+      <div class="icon">🔥</div>
+      <div>
+        <h3>Alles inbegrepen</h3>
+        <p>Grill, vlees, broodjes, snijmes en gas. Jij voorziet enkel de verse groenten.</p>
+      </div>
+    </div>
+
+    <!-- Gele kaart -->
+    <div class="r4-cell-yellow">
+      <div class="icon">🔪</div>
+      <div>
+        <h3>Zelf snijden</h3>
+        <p>Interactief &amp; gezellig. Niemand vergeet dit feestje met dit unieke concept.</p>
+      </div>
+    </div>
+
+    <!-- Foto klein -->
+    <div class="r4-cell-img">
+      <img src="/images/hero-1.webp" alt="">
+    </div>
+
+    <!-- Tagline kaart -->
+    <div class="r4-cell-tagline">
+      <div class="tag">het concept</div>
+      <p>Weinig werk,<br><em>veel sfeer.</em></p>
+    </div>
+  </div>
+</div>
+
+<div class="sep"></div>
+
+<!-- ══════ RICHTING 5: FULL IMMERSIVE ══════ -->
+<div class="label">
+  Richting 5 <span>Full Immersive</span> — Foto dominant, gecentreerde hero, maximale impact
+</div>
+<div class="r5">
+  <div class="r5-hero">
+    <img src="/images/hero-3.webp" alt="">
+
+    <div class="r5-nav">
+      <div class="r5-nav-logo">
+        <img src="/images/logo.png" alt="logo">
+        <span class="r5-nav-brand">de vleesbobijn</span>
+      </div>
+      <div class="r5-nav-links">
+        <a href="#">de vleesbobijn</a>
+        <a href="#">Aanbod</a>
+        <a href="#">Boeken</a>
+        <a href="#">FAQ</a>
+        <a href="#">Contact</a>
+      </div>
+      <a href="#" class="r5-nav-cta">NU BOEKEN</a>
+    </div>
+
+    <div class="r5-content">
+      <div class="r5-eyebrow">het feestconcept</div>
+      <h1 class="r5-h1">
+        Het unieke feestje
+        <em>voor bij je thuis.</em>
+      </h1>
+      <p class="r5-sub">De vleesbobijn is het totaalconcept voor een geslaagd feest bij je thuis. Bereid zelf de heerlijkste pita's op elke locatie en op elk moment.</p>
+      <div class="r5-btns">
+        <a href="#" class="r5-btn-primary">NU BOEKEN</a>
+        <a href="#" class="r5-btn-secondary">CONTACT</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="r5-strip">
+    <div class="r5-strip-item">
+      <span class="r5-strip-icon">🔥</span>
+      <div class="r5-strip-text">
+        <h4>Alles inbegrepen</h4>
+        <p>Grill, vlees, broodjes, gas & mes</p>
+      </div>
+    </div>
+    <div class="r5-strip-item">
+      <span class="r5-strip-icon">🔪</span>
+      <div class="r5-strip-text">
+        <h4>Zelf snijden</h4>
+        <p>Interactief & onvergetelijk gezellig</p>
+      </div>
+    </div>
+    <div class="r5-strip-item">
+      <span class="r5-strip-icon">🏆</span>
+      <div class="r5-strip-text">
+        <h4>Topkwaliteit</h4>
+        <p>Zorgvuldig geselecteerd vlees & brood</p>
+      </div>
+    </div>
+    <div class="r5-strip-item">
+      <span class="r5-strip-icon">📍</span>
+      <div class="r5-strip-text">
+        <h4>Afhalen in Deerlijk</h4>
+        <p>Eenvoudig & snel klaar</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="sep"></div>
+
+<!-- ══════ RICHTING 6: GLASSMORPHISM ══════ -->
+<div class="label">
+  Richting 6 <span>Glassmorphism</span> — Frosted glass, gradient glows, ultra-modern
+</div>
+<div class="r6">
+  <div class="r6-bg">
+    <img src="/images/hero-2.webp" alt="">
+  </div>
+  <div class="r6-blob1"></div>
+  <div class="r6-blob2"></div>
+
+  <div class="r6-content">
+    <div class="r6-nav">
+      <div class="r6-nav-logo">
+        <img src="/images/logo.png" alt="logo">
+        <span class="r6-nav-brand">de vleesbobijn</span>
+      </div>
+      <div class="r6-nav-links">
+        <a href="#">de vleesbobijn</a>
+        <a href="#">Aanbod</a>
+        <a href="#">Boeken</a>
+        <a href="#">FAQ</a>
+        <a href="#">Contact</a>
+      </div>
+      <a href="#" class="r6-nav-cta">NU BOEKEN</a>
+    </div>
+
+    <div class="r6-main">
+      <div class="r6-left">
+        <div class="r6-badge">
+          <span class="r6-badge-dot"></span>
+          het feestconcept
+        </div>
+        <h1 class="r6-h1">
+          Pita & kebab<br>van het spit
+          <em>voor bij je thuis.</em>
+        </h1>
+        <p class="r6-sub">De vleesbobijn is het totaalconcept voor een geslaagd feest. Bereid zelf de heerlijkste pita's op elke locatie en op elk moment.</p>
+        <div class="r6-btns">
+          <a href="#" class="r6-btn-primary">NU BOEKEN</a>
+          <a href="#" class="r6-btn-secondary">CONTACT</a>
+        </div>
+      </div>
+
+      <!-- Glass card -->
+      <div class="r6-card">
+        <div class="r6-card-item">
+          <div class="r6-card-icon">🔥</div>
+          <div class="r6-card-text">
+            <h4>Alles inbegrepen</h4>
+            <p>Grill, vlees, broodjes, snijmes en gas. Jij voorziet enkel de groenten.</p>
+          </div>
+        </div>
+        <div class="r6-card-divider"></div>
+        <div class="r6-card-item">
+          <div class="r6-card-icon">🔪</div>
+          <div class="r6-card-text">
+            <h4>Zelf snijden</h4>
+            <p>Interactief & gezellig. Niemand vergeet dit unieke feestje.</p>
+          </div>
+        </div>
+        <div class="r6-card-divider"></div>
+        <div class="r6-card-item">
+          <div class="r6-card-icon">🏆</div>
+          <div class="r6-card-text">
+            <h4>Topkwaliteit</h4>
+            <p>Zorgvuldig geselecteerd vlees en brood. Eén hap en je bent overtuigd.</p>
+          </div>
+        </div>
+        <div class="r6-cta-card">
+          <p>Klaar voor een onvergetelijk feest?</p>
+          <a href="#">NU BOEKEN</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

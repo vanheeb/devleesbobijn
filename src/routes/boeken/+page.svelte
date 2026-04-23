@@ -122,7 +122,7 @@
 </script>
 
 <svelte:head>
-	<title>Boeken - De Vleesbobijn</title>
+	<title>Boeken - de vleesbobijn</title>
 </svelte:head>
 
 <div class="max-w-4xl mx-auto px-4 py-12">

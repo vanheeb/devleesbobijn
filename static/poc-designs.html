@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>POC Designs — de vleesbobijn</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Oswald', sans-serif; background: #111; }
+
+/* ── LABEL ── */
+.label {
+  background: #333;
+  color: #fff;
+  font-family: 'Oswald', sans-serif;
+  font-size: 13px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 10px 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.label span { background: #7c08b3; color: #fff; padding: 2px 10px; border-radius: 4px; font-size: 11px; }
+
+/* ═══════════════════════════════════════════════
+   RICHTING 1 — BOLD & FEESTELIJK
+═══════════════════════════════════════════════ */
+.r1 {
+  background: #7c08b3;
+  min-height: 480px;
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+/* decoratieve gele blok achtergrond */
+.r1::before {
+  content: '';
+  position: absolute;
+  bottom: -60px; right: -60px;
+  width: 420px; height: 420px;
+  background: #ffdc82;
+  border-radius: 50%;
+  opacity: 0.12;
+}
+
+.r1-nav {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  padding: 18px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(0,0,0,0.25);
+  backdrop-filter: blur(8px);
+}
+.r1-nav-logo { display: flex; align-items: center; gap: 10px; }
+.r1-nav-logo img { width: 36px; height: 36px; border-radius: 50%; border: 2px solid #ffdc82; }
+.r1-nav-brand { color: #fff; font-family: Impact, Arial, sans-serif; font-size: 20px; letter-spacing: 1px; }
+.r1-nav-links { display: flex; gap: 6px; }
+.r1-nav-links a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 13px; padding: 6px 12px; border-radius: 6px; }
+.r1-nav-links a:hover { color: #fff; }
+.r1-nav-cta { background: #ffdc82; color: #5c0685; font-family: Impact, Arial, sans-serif; font-size: 14px; padding: 8px 20px; border-radius: 8px; text-decoration: none; letter-spacing: 1px; }
+
+.r1-left {
+  padding: 110px 40px 60px 60px;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.r1-eyebrow {
+  display: inline-block;
+  background: #ffdc82;
+  color: #5c0685;
+  font-family: Impact, Arial, sans-serif;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 4px 14px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  width: fit-content;
+}
+
+.r1-h1 {
+  font-family: Impact, 'Arial Narrow', sans-serif;
+  font-size: 68px;
+  line-height: 1;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+.r1-h1 em { color: #ffdc82; font-style: normal; display: block; }
+
+.r1-sub {
+  color: rgba(255,255,255,0.8);
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.7;
+  margin: 20px 0 32px;
+  max-width: 360px;
+}
+
+.r1-btns { display: flex; gap: 12px; }
+.r1-btn-primary {
+  background: #ffdc82;
+  color: #5c0685;
+  font-family: Impact, sans-serif;
+  font-size: 16px;
+  letter-spacing: 2px;
+  padding: 14px 32px;
+  border-radius: 10px;
+  text-decoration: none;
+  text-transform: uppercase;
+  border: 3px solid #ffdc82;
+  transition: all .2s;
+}
+.r1-btn-secondary {
+  background: transparent;
+  color: #fff;
+  font-family: Impact, sans-serif;
+  font-size: 16px;
+  letter-spacing: 2px;
+  padding: 14px 32px;
+  border-radius: 10px;
+  text-decoration: none;
+  text-transform: uppercase;
+  border: 3px solid rgba(255,255,255,0.4);
+}
+
+/* Foto-collage rechts */
+.r1-right {
+  position: relative;
+  overflow: hidden;
+}
+.r1-right img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: saturate(1.1) contrast(1.05);
+}
+/* gele border frame */
+.r1-right::after {
+  content: '';
+  position: absolute;
+  top: 20px; left: -8px; bottom: 20px; right: 20px;
+  border: 4px solid #ffdc82;
+  border-radius: 16px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* USP strip */
+.r1-usps {
+  background: #ffdc82;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+.r1-usp {
+  padding: 24px 32px;
+  border-right: 2px solid rgba(124, 8, 179, 0.15);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.r1-usp:last-child { border-right: none; }
+.r1-usp-icon { font-size: 28px; }
+.r1-usp-text h4 { font-family: Impact, sans-serif; font-size: 16px; color: #5c0685; letter-spacing: 1px; margin-bottom: 2px; }
+.r1-usp-text p { font-size: 12px; color: #7c08b3; font-weight: 300; }
+
+
+/* ═══════════════════════════════════════════════
+   RICHTING 2 — DARK & PREMIUM
+═══════════════════════════════════════════════ */
+.r2 {
+  background: #0f0718;
+  min-height: 480px;
+  position: relative;
+  overflow: hidden;
+}
+
+.r2-nav {
+  padding: 20px 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.r2-nav-logo { display: flex; align-items: center; gap: 10px; }
+.r2-nav-logo img { width: 36px; height: 36px; border-radius: 50%; border: 2px solid #7c08b3; }
+.r2-nav-brand { color: #fff; font-family: Impact, Arial, sans-serif; font-size: 20px; letter-spacing: 2px; }
+.r2-nav-links { display: flex; gap: 4px; }
+.r2-nav-links a { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 13px; padding: 6px 14px; border-radius: 6px; letter-spacing: 1px; }
+.r2-nav-cta { background: linear-gradient(135deg, #7c08b3, #a020d4); color: #ffdc82; font-family: Impact, Arial, sans-serif; font-size: 13px; padding: 8px 22px; border-radius: 8px; text-decoration: none; letter-spacing: 2px; }
+
+.r2-hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 400px;
+}
+
+.r2-left {
+  padding: 60px 40px 60px 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.r2-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #ffdc82;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+.r2-tag::before { content: ''; width: 24px; height: 1px; background: #ffdc82; }
+
+.r2-h1 {
+  font-family: Impact, 'Arial Narrow', sans-serif;
+  font-size: 58px;
+  line-height: 1.05;
+  color: #fff;
+  letter-spacing: 1px;
+  margin-bottom: 20px;
+}
+.r2-h1 em { color: #7c08b3; font-style: normal; display: block;
+  text-shadow: 0 0 40px rgba(124,8,179,0.6); }
+
+.r2-sub {
+  color: rgba(255,255,255,0.5);
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.8;
+  margin-bottom: 36px;
+  max-width: 340px;
+}
+
+.r2-btns { display: flex; gap: 14px; align-items: center; }
+.r2-btn-primary {
+  background: linear-gradient(135deg, #7c08b3, #a020d4);
+  color: #ffdc82;
+  font-family: Impact, sans-serif;
+  font-size: 15px;
+  letter-spacing: 2px;
+  padding: 14px 34px;
+  border-radius: 10px;
+  text-decoration: none;
+  box-shadow: 0 8px 32px rgba(124,8,179,0.4);
+}
+.r2-btn-secondary {
+  color: rgba(255,255,255,0.6);
+  font-size: 13px;
+  letter-spacing: 1px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.r2-btn-secondary::after { content: '→'; }
+
+.r2-right {
+  position: relative;
+  overflow: hidden;
+}
+.r2-right img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: 0.7;
+  filter: saturate(0.8);
+}
+/* paarse glow overlay */
+.r2-right::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, #0f0718 0%, transparent 40%),
+              linear-gradient(to top, #0f0718 0%, transparent 50%);
+  z-index: 1;
+}
+/* glow light */
+.r2-right::after {
+  content: '';
+  position: absolute;
+  bottom: -80px; left: 50%;
+  width: 300px; height: 300px;
+  background: radial-gradient(circle, rgba(124,8,179,0.4) 0%, transparent 70%);
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+/* Stats bar */
+.r2-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  background: rgba(255,255,255,0.02);
+}
+.r2-stat {
+  padding: 22px 40px;
+  border-right: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  flex-direction: column;
+}
+.r2-stat:last-child { border-right: none; }
+.r2-stat-num { font-family: Impact, sans-serif; font-size: 32px; color: #ffdc82; letter-spacing: 2px; }
+.r2-stat-label { font-size: 11px; color: rgba(255,255,255,0.35); letter-spacing: 2px; text-transform: uppercase; margin-top: 2px; }
+
+
+/* ═══════════════════════════════════════════════
+   RICHTING 3 — WARM & EDITORIAL
+═══════════════════════════════════════════════ */
+.r3 {
+  background: #fffdf7;
+  min-height: 480px;
+}
+
+.r3-nav {
+  padding: 16px 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid #ffdc82;
+}
+.r3-nav-logo { display: flex; align-items: center; gap: 10px; }
+.r3-nav-logo img { width: 38px; height: 38px; border-radius: 50%; }
+.r3-nav-brand { color: #7c08b3; font-family: Impact, Arial, sans-serif; font-size: 22px; letter-spacing: 2px; }
+.r3-nav-links { display: flex; gap: 4px; }
+.r3-nav-links a { color: #444; text-decoration: none; font-size: 13px; padding: 6px 14px; border-radius: 6px; letter-spacing: 1px; }
+.r3-nav-cta { background: #7c08b3; color: #ffdc82; font-family: Impact, Arial, sans-serif; font-size: 13px; padding: 9px 22px; border-radius: 8px; text-decoration: none; letter-spacing: 2px; }
+
+.r3-hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  min-height: 400px;
+}
+
+.r3-left {
+  background: #7c08b3;
+  padding: 60px 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+/* decoratieve cirkel */
+.r3-left::after {
+  content: '';
+  position: absolute;
+  bottom: -100px; right: -100px;
+  width: 280px; height: 280px;
+  background: rgba(255,220,130,0.15);
+  border-radius: 50%;
+}
+
+.r3-h1 {
+  font-family: Impact, 'Arial Narrow', sans-serif;
+  font-size: 52px;
+  line-height: 1.05;
+  color: #fff;
+  margin-bottom: 20px;
+  position: relative; z-index: 1;
+}
+.r3-h1 em { color: #ffdc82; font-style: normal; }
+
+.r3-sub {
+  color: rgba(255,255,255,0.8);
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.8;
+  margin-bottom: 36px;
+  position: relative; z-index: 1;
+}
+
+.r3-btns { display: flex; gap: 12px; position: relative; z-index: 1; }
+.r3-btn-primary {
+  background: #ffdc82;
+  color: #5c0685;
+  font-family: Impact, sans-serif;
+  font-size: 15px;
+  letter-spacing: 2px;
+  padding: 13px 30px;
+  border-radius: 10px;
+  text-decoration: none;
+}
+.r3-btn-secondary {
+  background: rgba(255,255,255,0.12);
+  color: #fff;
+  font-family: Impact, sans-serif;
+  font-size: 15px;
+  letter-spacing: 2px;
+  padding: 13px 30px;
+  border-radius: 10px;
+  text-decoration: none;
+  border: 2px solid rgba(255,255,255,0.25);
+}
+
+/* Rechts: foto-grid */
+.r3-right {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 4px;
+  background: #ffdc82;
+}
+.r3-right img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+.r3-right img:first-child {
+  grid-row: span 2;
+}
+
+/* Card strip */
+.r3-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border-top: 3px solid #ffdc82;
+}
+.r3-card {
+  padding: 28px 36px;
+  border-right: 1px solid #f0e8d0;
+  background: #fff;
+}
+.r3-card:last-child { border-right: none; }
+.r3-card-icon { font-size: 26px; margin-bottom: 10px; }
+.r3-card h4 { font-family: Impact, sans-serif; font-size: 17px; color: #7c08b3; letter-spacing: 1px; margin-bottom: 6px; }
+.r3-card p { font-size: 12px; color: #666; line-height: 1.7; font-weight: 300; }
+</style>
+</head>
+<body>
+
+<!-- ══════ RICHTING 1: BOLD & FEESTELIJK ══════ -->
+<div class="label">
+  Richting 1 <span>Bold & Feestelijk</span> — Impact-kleuren, energiek, uitgesproken
+</div>
+<div class="r1">
+  <!-- Nav -->
+  <div class="r1-nav">
+    <div class="r1-nav-logo">
+      <img src="/images/logo.png" alt="logo">
+      <span class="r1-nav-brand">de vleesbobijn</span>
+    </div>
+    <div class="r1-nav-links">
+      <a href="#">de vleesbobijn</a>
+      <a href="#">Aanbod</a>
+      <a href="#">Boeken</a>
+      <a href="#">FAQ</a>
+      <a href="#">Contact</a>
+    </div>
+    <a href="#" class="r1-nav-cta">NU BOEKEN</a>
+  </div>
+
+  <!-- Left -->
+  <div class="r1-left">
+    <span class="r1-eyebrow">het feestconcept</span>
+    <h1 class="r1-h1">
+      Het unieke<br>feestje
+      <em>voor thuis.</em>
+    </h1>
+    <p class="r1-sub">De vleesbobijn is het totaalconcept voor een geslaagd feest. Bereid zelf de heerlijkste pita's — op elke locatie, op elk moment.</p>
+    <div class="r1-btns">
+      <a href="#" class="r1-btn-primary">NU BOEKEN</a>
+      <a href="#" class="r1-btn-secondary">CONTACT</a>
+    </div>
+  </div>
+
+  <!-- Right: foto -->
+  <div class="r1-right">
+    <img src="/images/hero-3.webp" alt="Vleesbobijn">
+  </div>
+</div>
+
+<!-- USP strip -->
+<div class="r1-usps">
+  <div class="r1-usp">
+    <span class="r1-usp-icon">🔥</span>
+    <div class="r1-usp-text">
+      <h4>ALLES INBEGREPEN</h4>
+      <p>Grill, vlees, broodjes, gas & mes</p>
+    </div>
+  </div>
+  <div class="r1-usp">
+    <span class="r1-usp-icon">🔪</span>
+    <div class="r1-usp-text">
+      <h4>ZELF SNIJDEN</h4>
+      <p>Interactief & onvergetelijk gezellig</p>
+    </div>
+  </div>
+  <div class="r1-usp">
+    <span class="r1-usp-icon">🏆</span>
+    <div class="r1-usp-text">
+      <h4>TOPKWALITEIT</h4>
+      <p>Zorgvuldig geselecteerd vlees & brood</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════ RICHTING 2: DARK & PREMIUM ══════ -->
+<div class="label" style="margin-top:4px;">
+  Richting 2 <span>Dark & Premium</span> — Donker, gloeiend paars, exclusief gevoel
+</div>
+<div class="r2">
+  <!-- Nav -->
+  <div class="r2-nav">
+    <div class="r2-nav-logo">
+      <img src="/images/logo.png" alt="logo">
+      <span class="r2-nav-brand">de vleesbobijn</span>
+    </div>
+    <div class="r2-nav-links">
+      <a href="#">de vleesbobijn</a>
+      <a href="#">Aanbod</a>
+      <a href="#">Boeken</a>
+      <a href="#">FAQ</a>
+      <a href="#">Contact</a>
+    </div>
+    <a href="#" class="r2-nav-cta">NU BOEKEN</a>
+  </div>
+
+  <!-- Hero -->
+  <div class="r2-hero">
+    <div class="r2-left">
+      <div class="r2-tag">het unieke feestconcept</div>
+      <h1 class="r2-h1">
+        Pita & kebab<br>van het spit
+        <em>voor thuis.</em>
+      </h1>
+      <p class="r2-sub">De vleesbobijn is het totaalconcept voor een geslaagd feest bij je thuis. Bereid zelf de heerlijkste pita's — op elke locatie, op elk moment.</p>
+      <div class="r2-btns">
+        <a href="#" class="r2-btn-primary">NU BOEKEN</a>
+        <a href="#" class="r2-btn-secondary">Meer info</a>
+      </div>
+    </div>
+    <div class="r2-right">
+      <img src="/images/hero-3.webp" alt="Vleesbobijn">
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="r2-stats">
+    <div class="r2-stat">
+      <span class="r2-stat-num">3</span>
+      <span class="r2-stat-label">Grills beschikbaar</span>
+    </div>
+    <div class="r2-stat">
+      <span class="r2-stat-num">15–40</span>
+      <span class="r2-stat-label">Personen per pakket</span>
+    </div>
+    <div class="r2-stat">
+      <span class="r2-stat-num">100%</span>
+      <span class="r2-stat-label">Onvergetelijk gegarandeerd</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════ RICHTING 3: WARM & EDITORIAL ══════ -->
+<div class="label" style="margin-top:4px;">
+  Richting 3 <span>Warm & Editorial</span> — Huidige richting, verfijnd & fotogericht
+</div>
+<div class="r3">
+  <!-- Nav -->
+  <div class="r3-nav">
+    <div class="r3-nav-logo">
+      <img src="/images/logo.png" alt="logo">
+      <span class="r3-nav-brand">de vleesbobijn</span>
+    </div>
+    <div class="r3-nav-links">
+      <a href="#">de vleesbobijn</a>
+      <a href="#">Aanbod</a>
+      <a href="#">Boeken</a>
+      <a href="#">FAQ</a>
+      <a href="#">Contact</a>
+    </div>
+    <a href="#" class="r3-nav-cta">NU BOEKEN</a>
+  </div>
+
+  <!-- Hero -->
+  <div class="r3-hero">
+    <div class="r3-left">
+      <h1 class="r3-h1">Het unieke feestje <em>voor bij je thuis</em></h1>
+      <p class="r3-sub">De vleesbobijn is het totaalconcept voor een geslaagd feest bij je thuis. Bereid zelf de heerlijkste pita's — op elke locatie, op elk moment.</p>
+      <div class="r3-btns">
+        <a href="#" class="r3-btn-primary">NU BOEKEN</a>
+        <a href="#" class="r3-btn-secondary">CONTACT</a>
+      </div>
+    </div>
+    <div class="r3-right">
+      <img src="/images/hero-1.webp" alt="">
+      <img src="/images/hero-2.webp" alt="">
+      <img src="/images/hero-4.webp" alt="">
+    </div>
+  </div>
+
+  <!-- Cards -->
+  <div class="r3-cards">
+    <div class="r3-card">
+      <div class="r3-card-icon">🔥</div>
+      <h4>Alles inbegrepen</h4>
+      <p>Grill, vlees, broodjes of durums, snijmes en gas. Jij voorziet enkel de verse groenten.</p>
+    </div>
+    <div class="r3-card">
+      <div class="r3-card-icon">🔪</div>
+      <h4>Zelf snijden</h4>
+      <p>Jij en je gasten snijden zelf het vlees af van het spit. Interactief & onvergetelijk gezellig.</p>
+    </div>
+    <div class="r3-card">
+      <div class="r3-card-icon">🏆</div>
+      <h4>Topkwaliteit</h4>
+      <p>Zorgvuldig geselecteerd vlees en brood. Samen met onze leveranciers, het beste van het beste.</p>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
