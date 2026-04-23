@@ -20,6 +20,8 @@
 	let guestCount = $state('');
 	let notes = $state('');
 
+	let acceptedTerms = $state(false);
+	let acceptedPrivacy = $state(false);
 	let submitting = $state(false);
 	let error = $state('');
 
@@ -67,6 +69,14 @@
 			error = 'Vul alle verplichte velden in.';
 			return;
 		}
+		if (!acceptedTerms) {
+			error = 'Je moet de huurvoorwaarden aanvaarden.';
+			return;
+		}
+		if (!acceptedPrivacy) {
+			error = 'Je moet akkoord gaan met de privacyverklaring.';
+			return;
+		}
 
 		submitting = true;
 		error = '';
@@ -85,7 +95,9 @@
 				customerCity,
 				eventType,
 				guestCount: guestCount ? parseInt(guestCount) : null,
-				notes
+				notes,
+				acceptedTerms,
+				acceptedPrivacy
 			};
 
 			const res = await fetch('/api/checkout', {
@@ -445,6 +457,32 @@
 							</p>
 						</div>
 
+						<div class="mt-5 space-y-3 text-sm">
+							<label class="flex items-start gap-2 cursor-pointer">
+								<input
+									type="checkbox"
+									bind:checked={acceptedTerms}
+									class="mt-1 w-4 h-4 accent-primary"
+								/>
+								<span class="text-gray-700">
+									Ik aanvaard de
+									<a href="/voorwaarden" target="_blank" rel="noopener" class="text-primary underline">huurvoorwaarden</a>
+									(€250 waarborg, €100 reinigingskost bij niet-propere teruggave).
+								</span>
+							</label>
+							<label class="flex items-start gap-2 cursor-pointer">
+								<input
+									type="checkbox"
+									bind:checked={acceptedPrivacy}
+									class="mt-1 w-4 h-4 accent-primary"
+								/>
+								<span class="text-gray-700">
+									Ik ga akkoord met de
+									<a href="/privacy" target="_blank" rel="noopener" class="text-primary underline">privacyverklaring</a>.
+								</span>
+							</label>
+						</div>
+
 						{#if error}
 							<div class="bg-red-50 border border-red-200 rounded-xl p-3 mt-4 text-red-700 text-sm">
 								{error}
@@ -453,7 +491,7 @@
 
 						<button
 							onclick={handleSubmit}
-							disabled={submitting || !customerName || !customerEmail || !customerPhone}
+							disabled={submitting || !customerName || !customerEmail || !customerPhone || !acceptedTerms || !acceptedPrivacy}
 							class="w-full mt-6 bg-secondary hover:bg-secondary-dark disabled:bg-gray-300 text-white font-bold py-4 rounded-xl text-lg transition-colors"
 						>
 							{#if submitting}
