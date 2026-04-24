@@ -69,7 +69,7 @@ export async function GET({ url, setHeaders }) {
 	}
 
 	// Second pass: build availability for each day of the month
-	const availability: Record<string, { available: number; total: number }> = {};
+	const availability: Record<string, { available: number; total: number; bufferSide: null | 'left' | 'right' | 'full' }> = {};
 	for (let day = 1; day <= lastDay; day++) {
 		const date = new Date(year, month, day);
 		const dateStr = getDateStr(date);
@@ -77,24 +77,35 @@ export async function GET({ url, setHeaders }) {
 		const nextStr = getDateStr(new Date(year, month, day + 1));
 
 		const ownBookings = bookingCountByDate[dateStr] ?? 0;
-		// Half-day buffer: adjacent day bookings each occupy 1 grill on this day
 		const prevBuffer = bookingCountByDate[prevStr] ?? 0;
 		const nextBuffer = bookingCountByDate[nextStr] ?? 0;
 
 		const blockedForDay = blocked.filter((b) => b.date === dateStr);
 		const dbBlocksAll = blockedForDay.some((b) => b.grillId === null);
 		const dbSpecificBlocked = blockedForDay.filter((b) => b.grillId !== null).length;
-		// Google Calendar: each event blocks 1 grill, no buffer propagation
 		const calendarBlockCount = calendarBlocked.filter((d) => d === dateStr).length;
 
 		let occupied: number;
 		if (dbBlocksAll) {
-			occupied = totalGrills; // hard-blocked: full day unavailable
+			occupied = totalGrills;
 		} else {
 			occupied = Math.min(totalGrills, ownBookings + prevBuffer + nextBuffer + dbSpecificBlocked + calendarBlockCount);
 		}
 
-		availability[dateStr] = { available: Math.max(0, totalGrills - occupied), total: totalGrills };
+		const available = Math.max(0, totalGrills - occupied);
+		const ownOccupied = dbBlocksAll ? totalGrills : Math.min(totalGrills, ownBookings + dbSpecificBlocked + calendarBlockCount);
+
+		// bufferSide: only set when this day has no own occupancy and is limited by adjacent bookings
+		let bufferSide: null | 'left' | 'right' | 'full' = null;
+		if (!dbBlocksAll && ownOccupied === 0 && available < totalGrills) {
+			const hasPrev = prevBuffer > 0;
+			const hasNext = nextBuffer > 0;
+			if (hasPrev && hasNext) bufferSide = 'full';
+			else if (hasPrev) bufferSide = 'left';  // return day: left half colored
+			else if (hasNext) bufferSide = 'right'; // prep day: right half colored
+		}
+
+		availability[dateStr] = { available, total: totalGrills, bufferSide };
 	}
 
 	setHeaders({ 'cache-control': 'no-store' });

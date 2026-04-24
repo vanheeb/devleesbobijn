@@ -75,6 +75,17 @@
 		return 'available';
 	}
 
+	// Returns inline style for half-day buffer cells
+	function getBufferStyle(dateStr: string, status: string): string {
+		if (status !== 'limited') return '';
+		const data = availability[dateStr];
+		if (!data?.bufferSide || data.bufferSide === 'full') return '';
+		const amber = '#fffbeb';
+		if (data.bufferSide === 'right') return `background: linear-gradient(to right, transparent 50%, ${amber} 50%)`;
+		if (data.bufferSide === 'left')  return `background: linear-gradient(to right, ${amber} 50%, transparent 50%)`;
+		return '';
+	}
+
 	function handleSelect(day: number) {
 		const dateStr = getDateStr(day);
 		const status = getStatus(dateStr);
@@ -136,13 +147,16 @@
 			{@const dateStr = getDateStr(day)}
 			{@const status = getStatus(dateStr)}
 			{@const isSelected = dateStr === selectedDate}
+			{@const bufferStyle = getBufferStyle(dateStr, status)}
 			<button
 				onclick={() => handleSelect(day)}
 				disabled={status === 'past' || status === 'full'}
+				style={isSelected ? '' : bufferStyle}
 				class="aspect-square rounded-lg text-sm font-medium flex items-center justify-center transition-all
 					{status === 'past' ? 'text-gray-300 cursor-not-allowed' : ''}
 					{status === 'full' ? 'bg-red-50 text-red-300 cursor-not-allowed' : ''}
-					{status === 'limited' ? 'bg-amber-50 text-amber-700 hover:bg-amber-100 cursor-pointer' : ''}
+					{status === 'limited' && !bufferStyle ? 'bg-amber-50 text-amber-700 hover:bg-amber-100 cursor-pointer' : ''}
+					{status === 'limited' && bufferStyle ? 'text-amber-700 hover:bg-amber-50 cursor-pointer' : ''}
 					{status === 'available' ? 'bg-green-50 text-green-700 hover:bg-green-100 cursor-pointer' : ''}
 					{isSelected ? 'ring-2 ring-primary bg-primary text-white hover:bg-primary-dark' : ''}"
 			>
@@ -154,12 +168,16 @@
 	<!-- Legend -->
 	<div class="flex flex-wrap gap-4 mt-4 pt-4 border-t text-xs text-gray-500">
 		<div class="flex items-center gap-1.5">
-			<div class="w-3 h-3 rounded bg-green-100 border border-green-300"></div>
+			<div class="w-3 h-3 rounded bg-green-50 border border-green-200"></div>
 			<span>Beschikbaar</span>
 		</div>
 		<div class="flex items-center gap-1.5">
-			<div class="w-3 h-3 rounded bg-amber-100 border border-amber-300"></div>
-			<span>Beperkt</span>
+			<div class="w-3 h-3 rounded bg-amber-50 border border-amber-200"></div>
+			<span>Nog 1 vrij</span>
+		</div>
+		<div class="flex items-center gap-1.5">
+			<div class="w-3 h-3 rounded border border-amber-200" style="background: linear-gradient(to right, #fffbeb 50%, transparent 50%)"></div>
+			<span>Halve dag</span>
 		</div>
 		<div class="flex items-center gap-1.5">
 			<div class="w-3 h-3 rounded bg-red-50 border border-red-200"></div>
