@@ -1,22 +1,14 @@
-import { drizzle } from 'drizzle-orm/postgres-js';
-import postgres from 'postgres';
+import { neonConfig, Pool } from '@neondatabase/serverless';
+import { drizzle } from 'drizzle-orm/neon-serverless';
 import * as schema from './schema';
 import { env } from '$lib/server/env';
+import ws from 'ws';
 
-// Single connection for serverless (Vercel); pool size of 1 per instance.
-// Neon handles connection pooling server-side.
-const requiresSsl = /sslmode=require|neon\.tech|supabase\.co|amazonaws\.com/.test(env.DATABASE_URL);
+// Use WebSocket for transactions (required for FOR UPDATE locks in serverless)
+neonConfig.webSocketConstructor = ws;
 
-const client = postgres(env.DATABASE_URL, {
-	max: env.NODE_ENV === 'production' ? 1 : 10,
-	idle_timeout: 20,
-	connect_timeout: 10,
-	ssl: requiresSsl ? 'require' : undefined,
-	// PgBouncer (Neon pooler) in transaction mode doesn't support persistent
-	// prepared statements. Disable them to avoid hanging queries.
-	prepare: false
-});
+const pool = new Pool({ connectionString: env.DATABASE_URL });
 
-export const db = drizzle(client, { schema });
+export const db = drizzle(pool, { schema });
 
 export type DB = typeof db;
