@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { MONTH_NAMES, DAY_NAMES, getDaysInMonth, getFirstDayOfMonth, toISODate } from '$lib/utils/dates';
+	import { bookingConfig } from '$lib/config';
 
 	type AvailabilityMap = Record<string, { available: number; total: number }>;
 
@@ -17,6 +18,12 @@
 	let loading = $state(false);
 
 	const today = toISODate(new Date());
+	// Earliest selectable date = today + minAdvanceDays
+	const minSelectableDate = (() => {
+		const d = new Date();
+		d.setDate(d.getDate() + bookingConfig.minAdvanceDays);
+		return toISODate(d);
+	})();
 
 	async function fetchAvailability() {
 		loading = true;
@@ -60,7 +67,7 @@
 	}
 
 	function getStatus(dateStr: string): 'available' | 'limited' | 'full' | 'past' {
-		if (dateStr < today) return 'past';
+		if (dateStr < minSelectableDate) return 'past';
 		const data = availability[dateStr];
 		if (!data) return 'past';
 		if (data.available === 0) return 'full';
