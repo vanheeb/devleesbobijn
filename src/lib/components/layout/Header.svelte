@@ -43,7 +43,7 @@
 			<li class="ml-2">
 				<a
 					href="/boeken"
-					class="bg-secondary hover:bg-secondary-dark text-primary-dark px-4 py-2 rounded-lg text-sm font-bold transition-colors"
+					class="bg-secondary hover:bg-secondary-dark text-primary-dark px-4 py-2 rounded-lg text-sm font-display transition-colors"
 				>
 					Nu boeken
 				</a>
@@ -88,7 +88,7 @@
 					<a
 						href="/boeken"
 						onclick={() => (mobileOpen = false)}
-						class="block text-center bg-secondary hover:bg-secondary-dark text-primary-dark px-4 py-2 rounded-lg text-sm font-bold"
+						class="block text-center bg-secondary hover:bg-secondary-dark text-primary-dark px-4 py-2 rounded-lg text-sm font-display"
 					>
 						Nu boeken
 					</a>
