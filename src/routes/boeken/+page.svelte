@@ -198,28 +198,6 @@
 					</div>
 				{/each}
 			</div>
-			{#if equipment.length > 0}
-				<h3 class="font-medium mb-4">🔧 Extra materiaal</h3>
-				<div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
-					{#each equipment as item}
-						<div class="bg-white rounded-xl p-4 border flex items-center justify-between">
-							<div>
-								<span class="font-medium">{item.name}</span>
-								<span class="text-sm text-gray-500 ml-2">{formatPriceShort(item.pricePerUnit)}/{item.unit}</span>
-							</div>
-							<div class="flex items-center gap-3">
-								<button onclick={() => updateExtra(item.id, -1)} disabled={!selectedExtras[item.id]}
-									aria-label="Hoeveelheid {item.name} verminderen"
-									class="w-8 h-8 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center font-bold disabled:opacity-30 transition-colors">-</button>
-								<span class="w-6 text-center font-bold">{selectedExtras[item.id] || 0}</span>
-								<button onclick={() => updateExtra(item.id, 1)}
-									aria-label="Hoeveelheid {item.name} verhogen"
-									class="w-8 h-8 rounded-lg bg-primary/10 hover:bg-primary/20 text-primary flex items-center justify-center font-bold transition-colors">+</button>
-							</div>
-						</div>
-					{/each}
-				</div>
-			{/if}
 			{#if extrasTotal > 0}
 				<div class="bg-secondary/10 rounded-xl p-4 mb-6 flex justify-between">
 					<span>Extra's totaal:</span>
