@@ -80,8 +80,9 @@ export async function GET({ url, setHeaders }) {
 		const nextStr = getDateStr(new Date(year, month, day + 1));
 
 		const ownOccupancy = occupancyByDate[dateStr] ?? 0;
-		const prevBuffer = occupancyByDate[prevStr] ?? 0;
-		const nextBuffer = occupancyByDate[nextStr] ?? 0;
+		// Cap at 1: adjacent rentals only consume 1 buffer slot regardless of how many grills are booked
+		const prevBuffer = Math.min(1, occupancyByDate[prevStr] ?? 0);
+		const nextBuffer = Math.min(1, occupancyByDate[nextStr] ?? 0);
 
 		const blockedForDay = blocked.filter((b) => b.date === dateStr);
 		const dbBlocksAll = blockedForDay.some((b) => b.grillId === null);
