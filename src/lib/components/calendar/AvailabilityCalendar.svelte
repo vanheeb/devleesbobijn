@@ -80,9 +80,12 @@
 		if (status !== 'limited') return '';
 		const data = availability[dateStr];
 		if (!data?.bufferSide || data.bufferSide === 'full') return '';
+		const green = '#f0fdf4';
 		const amber = '#fffbeb';
-		if (data.bufferSide === 'right') return `background: linear-gradient(to right, transparent 50%, ${amber} 50%)`;
-		if (data.bufferSide === 'left')  return `background: linear-gradient(to right, ${amber} 50%, transparent 50%)`;
+		// right = prep before rental: green top-left / amber bottom-right
+		if (data.bufferSide === 'right') return `background: linear-gradient(135deg, ${green} 50%, ${amber} 50%)`;
+		// left = return after rental: amber top-left / green bottom-right
+		if (data.bufferSide === 'left')  return `background: linear-gradient(135deg, ${amber} 50%, ${green} 50%)`;
 		return '';
 	}
 
@@ -176,7 +179,7 @@
 			<span>Nog 1 vrij</span>
 		</div>
 		<div class="flex items-center gap-1.5">
-			<div class="w-3 h-3 rounded border border-amber-200" style="background: linear-gradient(to right, #fffbeb 50%, transparent 50%)"></div>
+			<div class="w-3 h-3 rounded border border-amber-200" style="background: linear-gradient(135deg, #f0fdf4 50%, #fffbeb 50%)"></div>
 			<span>Halve dag</span>
 		</div>
 		<div class="flex items-center gap-1.5">
