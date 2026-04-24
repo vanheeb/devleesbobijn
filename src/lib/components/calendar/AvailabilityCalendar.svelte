@@ -2,7 +2,7 @@
 	import { MONTH_NAMES, DAY_NAMES, getDaysInMonth, getFirstDayOfMonth, toISODate } from '$lib/utils/dates';
 	import { bookingConfig } from '$lib/config';
 
-	type AvailabilityMap = Record<string, { available: number; total: number }>;
+	type AvailabilityMap = Record<string, { available: number; total: number; bufferSide?: string | null; bufferFull?: boolean }>;
 
 	let {
 		selectedDate = $bindable(''),
@@ -81,11 +81,11 @@
 		const data = availability[dateStr];
 		if (!data?.bufferSide || data.bufferSide === 'full') return '';
 		const green = '#f0fdf4';
-		const amber = '#fffbeb';
-		// right = prep before rental: green top-left / amber bottom-right
-		if (data.bufferSide === 'right') return `background: linear-gradient(135deg, ${green} 50%, ${amber} 50%)`;
-		// left = return after rental: amber top-left / green bottom-right
-		if (data.bufferSide === 'left')  return `background: linear-gradient(135deg, ${amber} 50%, ${green} 50%)`;
+		const occupied = data.bufferFull ? '#fef2f2' : '#fffbeb'; // red-50 when adjacent day is full, amber-50 when limited
+		// right = prep before rental: green top-left / occupied bottom-right
+		if (data.bufferSide === 'right') return `background: linear-gradient(135deg, ${green} 50%, ${occupied} 50%)`;
+		// left = return after rental: occupied top-left / green bottom-right
+		if (data.bufferSide === 'left')  return `background: linear-gradient(135deg, ${occupied} 50%, ${green} 50%)`;
 		return '';
 	}
 

@@ -72,7 +72,7 @@ export async function GET({ url, setHeaders }) {
 	}
 
 	// Second pass: build availability for each day of the month
-	const availability: Record<string, { available: number; total: number; bufferSide: null | 'left' | 'right' | 'full' }> = {};
+	const availability: Record<string, { available: number; total: number; bufferSide: null | 'left' | 'right' | 'full'; bufferFull?: boolean }> = {};
 	for (let day = 1; day <= lastDay; day++) {
 		const date = new Date(year, month, day);
 		const dateStr = getDateStr(date);
@@ -108,7 +108,11 @@ export async function GET({ url, setHeaders }) {
 			else if (hasNext) bufferSide = 'right'; // prep day: right half colored
 		}
 
-		availability[dateStr] = { available, total: totalGrills, bufferSide };
+		const prevFull = prevBuffer > 0 && (occupancyByDate[prevStr] ?? 0) >= totalGrills;
+		const nextFull = nextBuffer > 0 && (occupancyByDate[nextStr] ?? 0) >= totalGrills;
+		const bufferFull = bufferSide === 'left' ? prevFull : bufferSide === 'right' ? nextFull : prevFull || nextFull;
+
+		availability[dateStr] = { available, total: totalGrills, bufferSide, bufferFull: bufferFull || undefined };
 	}
 
 	setHeaders({ 'cache-control': 'no-store' });
