@@ -61,10 +61,13 @@
 		if (!acceptedPrivacy) { error = 'Je moet akkoord gaan met de privacyverklaring.'; return; }
 
 		submitting = true; error = '';
+		const controller = new AbortController();
+		const timeout = setTimeout(() => controller.abort(), 20000);
 		try {
 			const res = await fetch('/api/checkout', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
+				signal: controller.signal,
 				body: JSON.stringify({
 					packageId: selectedPackageId, rentalDate: selectedDate,
 					extras: Object.entries(selectedExtras).filter(([_, qty]) => qty > 0).map(([id, qty]) => ({ extraId: Number(id), quantity: qty })),
@@ -72,10 +75,21 @@
 					eventType, guestCount: guestCount ? parseInt(guestCount) : null, notes, acceptedTerms, acceptedPrivacy
 				})
 			});
+			clearTimeout(timeout);
+			if (!res.ok && res.headers.get('content-type')?.includes('text/html')) {
+				throw new Error('server_error');
+			}
 			const result = await res.json();
-			if (result.url) { window.location.href = result.url; }
-			else { error = result.error || 'Er ging iets mis bij het aanmaken van de betaling.'; }
-		} catch { error = 'Er ging iets mis. Probeer het opnieuw.'; }
+			if (result.url) { window.location.href = result.url; return; }
+			error = result.error || 'Er ging iets mis bij het aanmaken van de betaling.';
+		} catch (e: unknown) {
+			clearTimeout(timeout);
+			const name = e instanceof Error ? e.name : '';
+			const msg = e instanceof Error ? e.message : '';
+			if (name === 'AbortError') error = 'De server reageert niet. Probeer het opnieuw of neem contact op.';
+			else if (msg === 'server_error') error = 'Serverfout. Probeer het opnieuw of neem contact op via +32 479 39 22 83.';
+			else error = 'Er ging iets mis. Probeer het opnieuw.';
+		}
 		submitting = false;
 	}
 </script>
