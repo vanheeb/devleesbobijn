@@ -33,6 +33,10 @@ export async function GET({ url, setHeaders }) {
 	const lastDay = new Date(year, month + 1, 0).getDate();
 	const endDate = `${year}-${String(month + 1).padStart(2, '0')}-${String(lastDay).padStart(2, '0')}`;
 
+	// Extend by 1 day on each side to compute cross-month half-day buffers
+	const extStart = new Date(year, month, 0).toISOString().slice(0, 10); // last day of prev month
+	const extEnd = new Date(year, month + 1, 1).toISOString().slice(0, 10); // first day of next month
+
 	const [activeGrills, bookingCounts, blocked, calendarBlocked] = await Promise.all([
 		db.select().from(grills).where(eq(grills.active, true)),
 		db
@@ -43,7 +47,7 @@ export async function GET({ url, setHeaders }) {
 			.from(bookings)
 			.where(
 				and(
-					between(bookings.rentalDate, startDate, endDate),
+					between(bookings.rentalDate, extStart, extEnd),
 					notInArray(bookings.status, ['cancelled', 'payment_failed'])
 				)
 			)
@@ -54,19 +58,43 @@ export async function GET({ url, setHeaders }) {
 
 	const totalGrills = activeGrills.length;
 
+	function getDateStr(d: Date) {
+		return d.toISOString().slice(0, 10);
+	}
+
+	// First pass: compute raw booking counts per day (only actual bookings create buffer)
+	const bookingCountByDate: Record<string, number> = {};
+	for (const row of bookingCounts) {
+		bookingCountByDate[row.date] = row.count;
+	}
+
+	// Second pass: build availability for each day of the month
 	const availability: Record<string, { available: number; total: number }> = {};
 	for (let day = 1; day <= lastDay; day++) {
-		const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-		const bookingCount = bookingCounts.find((b) => b.date === dateStr)?.count ?? 0;
+		const date = new Date(year, month, day);
+		const dateStr = getDateStr(date);
+		const prevStr = getDateStr(new Date(year, month, day - 1));
+		const nextStr = getDateStr(new Date(year, month, day + 1));
+
+		const ownBookings = bookingCountByDate[dateStr] ?? 0;
+		// Half-day buffer: adjacent day bookings each occupy 1 grill on this day
+		const prevBuffer = bookingCountByDate[prevStr] ?? 0;
+		const nextBuffer = bookingCountByDate[nextStr] ?? 0;
+
 		const blockedForDay = blocked.filter((b) => b.date === dateStr);
-		// DB blocked dates: grillId=null blocks all, specific grillId blocks 1
 		const dbBlocksAll = blockedForDay.some((b) => b.grillId === null);
 		const dbSpecificBlocked = blockedForDay.filter((b) => b.grillId !== null).length;
-		// Google Calendar: each event blocks 1 grill (not all)
+		// Google Calendar: each event blocks 1 grill, no buffer propagation
 		const calendarBlockCount = calendarBlocked.filter((d) => d === dateStr).length;
-		const blockedCount = dbBlocksAll ? totalGrills : (dbSpecificBlocked + calendarBlockCount);
-		const available = Math.max(0, totalGrills - bookingCount - blockedCount);
-		availability[dateStr] = { available, total: totalGrills };
+
+		let occupied: number;
+		if (dbBlocksAll) {
+			occupied = totalGrills; // hard-blocked: full day unavailable
+		} else {
+			occupied = Math.min(totalGrills, ownBookings + prevBuffer + nextBuffer + dbSpecificBlocked + calendarBlockCount);
+		}
+
+		availability[dateStr] = { available: Math.max(0, totalGrills - occupied), total: totalGrills };
 	}
 
 	setHeaders({ 'cache-control': 'no-store' });
