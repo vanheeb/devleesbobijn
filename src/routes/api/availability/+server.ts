@@ -4,6 +4,7 @@ import { grills, bookings, blockedDates } from '$lib/server/db/schema';
 import { eq, and, between, notInArray, sql } from 'drizzle-orm';
 import { z } from 'zod';
 import { bookingConfig } from '$lib/config';
+import { getBlockedDatesForMonth } from '$lib/server/google-calendar';
 
 const querySchema = z.object({
 	month: z.coerce.number().int().min(0).max(11),
@@ -43,7 +44,7 @@ export async function GET({ url, setHeaders }) {
 	const lastDay = new Date(year, month + 1, 0).getDate();
 	const endDate = `${year}-${String(month + 1).padStart(2, '0')}-${String(lastDay).padStart(2, '0')}`;
 
-	const [activeGrills, bookingCounts, blocked] = await Promise.all([
+	const [activeGrills, bookingCounts, blocked, calendarBlocked] = await Promise.all([
 		db.select().from(grills).where(eq(grills.active, true)),
 		db
 			.select({
@@ -58,7 +59,8 @@ export async function GET({ url, setHeaders }) {
 				)
 			)
 			.groupBy(bookings.rentalDate),
-		db.select().from(blockedDates).where(between(blockedDates.date, startDate, endDate))
+		db.select().from(blockedDates).where(between(blockedDates.date, startDate, endDate)),
+		getBlockedDatesForMonth(year, month)
 	]);
 
 	const totalGrills = activeGrills.length;
@@ -68,7 +70,7 @@ export async function GET({ url, setHeaders }) {
 		const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
 		const bookingCount = bookingCounts.find((b) => b.date === dateStr)?.count ?? 0;
 		const blockedForDay = blocked.filter((b) => b.date === dateStr);
-		const allBlocked = blockedForDay.some((b) => b.grillId === null);
+		const allBlocked = blockedForDay.some((b) => b.grillId === null) || calendarBlocked.includes(dateStr);
 		const specificBlocked = blockedForDay.filter((b) => b.grillId !== null).length;
 		const blockedCount = allBlocked ? totalGrills : specificBlocked;
 		const available = Math.max(0, totalGrills - bookingCount - blockedCount);

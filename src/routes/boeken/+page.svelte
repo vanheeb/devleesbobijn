@@ -36,7 +36,6 @@
 	);
 
 	const totalAmount = $derived((selectedPackage?.price || 0) + extrasTotal);
-	const deposit = 25000;
 
 	function selectPackage(id: number) { selectedPackageId = id; step = 2; }
 	function selectDate(date: string) { selectedDate = date; step = 3; }
@@ -195,10 +194,10 @@
 				</div>
 				<div class="text-sm text-gray-600 mt-1">{formatDateNL(selectedDate)}</div>
 			</div>
-			<h3 class="font-medium mb-4">🥫 Sauzen — €10 per liter</h3>
-			<div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
+			<h3 class="text-sm font-medium text-gray-500 mb-3">Sauzen — optioneel, €10/liter</h3>
+			<div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-8">
 				{#each sauces as sauce}
-					<div class="bg-white rounded-xl p-4 border flex items-center justify-between">
+					<div class="bg-white rounded-lg p-3 border border-gray-100 flex items-center justify-between">
 						<span class="font-medium">{sauce.name}</span>
 						<div class="flex items-center gap-3">
 							<button onclick={() => updateExtra(sauce.id, -1)} disabled={!selectedExtras[sauce.id]}
@@ -311,10 +310,9 @@
 						</div>
 						<div class="bg-secondary/10 rounded-xl p-4 mt-4">
 							<div class="flex justify-between font-display">
-								<span>Nu te betalen (voorschot)</span>
-								<span class="text-secondary-dark">{formatPriceShort(deposit)}</span>
+								<span>Nu te betalen</span>
+								<span class="text-secondary-dark">{formatPriceShort(totalAmount)}</span>
 							</div>
-							<p class="text-xs text-gray-500 mt-1">Restbedrag ({formatPriceShort(Math.max(0, totalAmount - deposit))}) bij ophaling</p>
 						</div>
 						<div class="mt-5 space-y-3 text-sm">
 							<label class="flex items-start gap-2 cursor-pointer">
@@ -332,7 +330,7 @@
 						<button onclick={handleSubmit}
 							disabled={submitting || !customerName || !customerEmail || !customerPhone || !acceptedTerms || !acceptedPrivacy}
 							class="w-full mt-6 bg-secondary hover:bg-secondary-dark disabled:bg-gray-300 text-primary-dark font-display py-4 rounded-xl text-lg transition-colors">
-							{#if submitting}Laden...{:else}Betaal {formatPriceShort(deposit)} voorschot{/if}
+							{#if submitting}Laden...{:else}Betaal {formatPriceShort(totalAmount)}{/if}
 						</button>
 						<p class="text-xs text-gray-500 text-center mt-3">Veilige betaling via Stripe. Je wordt doorgestuurd naar een beveiligd betaalformulier.</p>
 					</div>

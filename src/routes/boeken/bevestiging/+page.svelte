@@ -43,8 +43,8 @@
 				<span class="font-medium">{formatPriceShort(b.totalAmount)}</span>
 			</div>
 			<div class="flex justify-between py-2">
-				<span class="text-gray-600">Voorschot betaald</span>
-				<span class="font-display text-primary">{formatPriceShort(b.deposit)}</span>
+				<span class="text-gray-600">Betaald</span>
+				<span class="font-display text-primary">{formatPriceShort(b.totalAmount)}</span>
 			</div>
 		</div>
 	</div>
@@ -62,10 +62,6 @@
 			</li>
 			<li class="flex items-start gap-2">
 				<span class="text-secondary-dark font-display">3.</span>
-				<span>Betaal het restbedrag ({formatPriceShort(Math.max(0, b.totalAmount - b.deposit))}) bij ophaling.</span>
-			</li>
-			<li class="flex items-start gap-2">
-				<span class="text-secondary-dark font-display">4.</span>
 				<span>Breng het materiaal proper terug voor terugstorting van de waarborg (€250).</span>
 			</li>
 		</ul>

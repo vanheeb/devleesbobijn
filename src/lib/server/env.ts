@@ -55,6 +55,10 @@ const envSchema = z.object({
 	BUSINESS_VAT_STATUS: z.string().default('Vrijgesteld van BTW'),
 	BUSINESS_IBAN: z.string().optional(),
 
+	// Google Calendar (optional — calendar integration disabled if absent)
+	GOOGLE_SERVICE_ACCOUNT_JSON: z.string().optional(),
+	GOOGLE_CALENDAR_ID: z.string().optional(),
+
 	// Initial admin bootstrap (used by seed script only)
 	INITIAL_ADMIN_PASSWORD: z.string().optional()
 });

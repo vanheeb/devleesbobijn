@@ -152,7 +152,7 @@ export async function POST({ request, url }) {
 		}
 
 		const totalAmount = pkg.price + extrasTotal;
-		const deposit = pricingConfig.depositCents;
+		const deposit = totalAmount; // full amount paid upfront via Stripe
 		const reference = await generateReference();
 		const reservedUntil = new Date(Date.now() + bookingConfig.reservationTtlMinutes * 60 * 1000);
 
@@ -210,10 +210,10 @@ export async function POST({ request, url }) {
 					price_data: {
 						currency: 'eur',
 						product_data: {
-							name: `Voorschot - ${pkg.name}`,
+							name: pkg.name,
 							description: `Boeking ${reservation.reference} - ${data.rentalDate}`
 						},
-						unit_amount: reservation.deposit
+						unit_amount: reservation.totalAmount
 					},
 					quantity: 1
 				}

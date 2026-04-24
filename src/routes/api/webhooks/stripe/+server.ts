@@ -1,10 +1,11 @@
 import { json } from '@sveltejs/kit';
 import { db } from '$lib/server/db';
-import { bookings, grills, stripeEvents } from '$lib/server/db/schema';
+import { bookings, grills, packages, stripeEvents } from '$lib/server/db/schema';
 import { eq, and, notInArray, ne } from 'drizzle-orm';
 import { stripe } from '$lib/server/stripe';
 import { env } from '$lib/server/env';
 import { sendBookingConfirmation } from '$lib/server/email';
+import { createBookingEvent } from '$lib/server/google-calendar';
 import type Stripe from 'stripe';
 
 export async function POST({ request }) {
@@ -108,6 +109,21 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
 			.set({ confirmationEmailSentAt: new Date() })
 			.where(eq(bookings.id, bookingId));
 	}
+
+	// Write to Google Calendar (non-blocking, errors are logged but don't throw)
+	const [pkg] = await db.select({ name: packages.name }).from(packages).where(eq(packages.id, booking.packageId)).limit(1);
+	await createBookingEvent({
+		reference: booking.reference,
+		customerName: booking.customerName,
+		customerEmail: booking.customerEmail,
+		customerPhone: booking.customerPhone,
+		rentalDate: booking.rentalDate,
+		packageName: pkg?.name ?? 'Pakket',
+		guestCount: booking.guestCount,
+		eventType: booking.eventType,
+		notes: booking.notes,
+		totalAmount: booking.totalAmount
+	});
 
 	console.log(`✅ Booking ${reference} confirmed via Stripe webhook`);
 }
