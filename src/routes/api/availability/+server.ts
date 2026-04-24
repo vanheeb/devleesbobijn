@@ -53,7 +53,7 @@ export async function GET({ url, setHeaders }) {
 			)
 			.groupBy(bookings.rentalDate),
 		db.select().from(blockedDates).where(between(blockedDates.date, startDate, endDate)),
-		getBlockedDatesForMonth(year, month)
+		getBlockedDatesForMonth(year, month, extStart, extEnd)
 	]);
 
 	const totalGrills = activeGrills.length;
@@ -62,10 +62,13 @@ export async function GET({ url, setHeaders }) {
 		return d.toISOString().slice(0, 10);
 	}
 
-	// First pass: compute raw booking counts per day (only actual bookings create buffer)
-	const bookingCountByDate: Record<string, number> = {};
+	// First pass: combined occupancy per day (DB bookings + calendar blocks) for buffer propagation
+	const occupancyByDate: Record<string, number> = {};
 	for (const row of bookingCounts) {
-		bookingCountByDate[row.date] = row.count;
+		occupancyByDate[row.date] = (occupancyByDate[row.date] ?? 0) + row.count;
+	}
+	for (const dateStr of calendarBlocked) {
+		occupancyByDate[dateStr] = (occupancyByDate[dateStr] ?? 0) + 1;
 	}
 
 	// Second pass: build availability for each day of the month
@@ -76,26 +79,25 @@ export async function GET({ url, setHeaders }) {
 		const prevStr = getDateStr(new Date(year, month, day - 1));
 		const nextStr = getDateStr(new Date(year, month, day + 1));
 
-		const ownBookings = bookingCountByDate[dateStr] ?? 0;
-		const prevBuffer = bookingCountByDate[prevStr] ?? 0;
-		const nextBuffer = bookingCountByDate[nextStr] ?? 0;
+		const ownOccupancy = occupancyByDate[dateStr] ?? 0;
+		const prevBuffer = occupancyByDate[prevStr] ?? 0;
+		const nextBuffer = occupancyByDate[nextStr] ?? 0;
 
 		const blockedForDay = blocked.filter((b) => b.date === dateStr);
 		const dbBlocksAll = blockedForDay.some((b) => b.grillId === null);
 		const dbSpecificBlocked = blockedForDay.filter((b) => b.grillId !== null).length;
-		const calendarBlockCount = calendarBlocked.filter((d) => d === dateStr).length;
 
 		let occupied: number;
 		if (dbBlocksAll) {
 			occupied = totalGrills;
 		} else {
-			occupied = Math.min(totalGrills, ownBookings + prevBuffer + nextBuffer + dbSpecificBlocked + calendarBlockCount);
+			occupied = Math.min(totalGrills, ownOccupancy + prevBuffer + nextBuffer + dbSpecificBlocked);
 		}
 
 		const available = Math.max(0, totalGrills - occupied);
-		const ownOccupied = dbBlocksAll ? totalGrills : Math.min(totalGrills, ownBookings + dbSpecificBlocked + calendarBlockCount);
+		const ownOccupied = dbBlocksAll ? totalGrills : Math.min(totalGrills, ownOccupancy + dbSpecificBlocked);
 
-		// bufferSide: only set when this day has no own occupancy and is limited by adjacent bookings
+		// bufferSide: only set when this day has no own occupancy and is limited by adjacent days
 		let bufferSide: null | 'left' | 'right' | 'full' = null;
 		if (!dbBlocksAll && ownOccupied === 0 && available < totalGrills) {
 			const hasPrev = prevBuffer > 0;

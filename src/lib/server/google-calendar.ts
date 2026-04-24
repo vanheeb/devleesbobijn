@@ -67,15 +67,19 @@ export async function createBookingEvent(booking: BookingEventData): Promise<voi
 	}
 }
 
-export async function getBlockedDatesForMonth(year: number, month: number): Promise<string[]> {
+export async function getBlockedDatesForMonth(
+	year: number,
+	month: number,
+	startDate?: string,
+	endDate?: string
+): Promise<string[]> {
 	const client = getCalendarClient();
 	if (!client) return [];
 
 	const { calendar, calendarId } = client;
 
-	// First and last day of the month
-	const timeMin = new Date(year, month, 1).toISOString();
-	const timeMax = new Date(year, month + 1, 0, 23, 59, 59).toISOString();
+	const timeMin = startDate ? new Date(startDate).toISOString() : new Date(year, month, 1).toISOString();
+	const timeMax = endDate ? new Date(endDate + 'T23:59:59').toISOString() : new Date(year, month + 1, 0, 23, 59, 59).toISOString();
 
 	try {
 		const res = await calendar.events.list({
