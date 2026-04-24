@@ -82,12 +82,13 @@
 
 <svelte:head>
 	<title>Boeken - de vleesbobijn</title>
-	<meta name="description" content="Boek je pitta/kebab-grill voor jouw feest. Kies je pakket, datum en extra's en betaal veilig online." />
+	<meta name="description" content="Boek je pita/kebab-grill voor jouw feest. Kies je pakket, datum en extra's en betaal veilig online." />
 	<meta property="og:title" content="Boeken - de vleesbobijn" />
-	<meta property="og:description" content="Boek je pitta/kebab-grill voor jouw feest. Kies je pakket, datum en extra's en betaal veilig online." />
+	<meta property="og:description" content="Boek je pita/kebab-grill voor jouw feest. Kies je pakket, datum en extra's en betaal veilig online." />
 	<meta property="og:image" content="https://devleesbobijn.be/images/hero-3.webp" />
 	<meta property="og:url" content="https://devleesbobijn.be/boeken" />
 	<meta property="og:type" content="website" />
+	<link rel="canonical" href="https://devleesbobijn.be/boeken" />
 </svelte:head>
 
 <div class="max-w-4xl mx-auto px-4 py-12">
@@ -187,9 +188,11 @@
 						<span class="font-medium">{sauce.name}</span>
 						<div class="flex items-center gap-3">
 							<button onclick={() => updateExtra(sauce.id, -1)} disabled={!selectedExtras[sauce.id]}
+								aria-label="Hoeveelheid {sauce.name} verminderen"
 								class="w-8 h-8 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center font-bold disabled:opacity-30 transition-colors">-</button>
 							<span class="w-6 text-center font-bold">{selectedExtras[sauce.id] || 0}</span>
 							<button onclick={() => updateExtra(sauce.id, 1)}
+								aria-label="Hoeveelheid {sauce.name} verhogen"
 								class="w-8 h-8 rounded-lg bg-primary/10 hover:bg-primary/20 text-primary flex items-center justify-center font-bold transition-colors">+</button>
 						</div>
 					</div>
@@ -206,9 +209,11 @@
 							</div>
 							<div class="flex items-center gap-3">
 								<button onclick={() => updateExtra(item.id, -1)} disabled={!selectedExtras[item.id]}
+									aria-label="Hoeveelheid {item.name} verminderen"
 									class="w-8 h-8 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center font-bold disabled:opacity-30 transition-colors">-</button>
 								<span class="w-6 text-center font-bold">{selectedExtras[item.id] || 0}</span>
 								<button onclick={() => updateExtra(item.id, 1)}
+									aria-label="Hoeveelheid {item.name} verhogen"
 									class="w-8 h-8 rounded-lg bg-primary/10 hover:bg-primary/20 text-primary flex items-center justify-center font-bold transition-colors">+</button>
 							</div>
 						</div>

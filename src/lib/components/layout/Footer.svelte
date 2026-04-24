@@ -8,7 +8,7 @@
 					de vleesbobijn
 				</h3>
 				<p class="text-sm leading-relaxed">
-					Het unieke feestconcept voor thuis. Huur een pitta/kebab-grill en
+					Het unieke feestconcept voor thuis. Huur een pita/kebab-grill en
 					maak van elk feest een onvergetelijke belevenis.
 				</p>
 			</div>

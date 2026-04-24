@@ -58,7 +58,7 @@
 			</li>
 			<li class="flex items-start gap-2">
 				<span class="text-secondary-dark font-display">2.</span>
-				<span>Haal het materiaal op op de afgesproken datum: <strong>Achterstraat 20, 8540 Deerlijk</strong></span>
+				<span>Haal op de afgesproken datum het materiaal op: <strong>Achterstraat 20, 8540 Deerlijk</strong></span>
 			</li>
 			<li class="flex items-start gap-2">
 				<span class="text-secondary-dark font-display">3.</span>

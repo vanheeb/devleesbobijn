@@ -2,13 +2,29 @@
 	import { formatPriceShort } from '$lib/utils/pricing';
 	import { businessConfig } from '$lib/config';
 
+	import { onDestroy } from 'svelte';
+
 	let { data } = $props();
 	const chickenPackages = $derived(data.packages.filter((p) => p.type === 'chicken'));
 	const kebabPackages = $derived(data.packages.filter((p) => p.type === 'kebab'));
 
-	const pageTitle = 'de vleesbobijn — Pitta & kebab grill huren in Deerlijk';
+	const heroImages = [
+		{ src: '/images/Vleesbobbijn-115.jpg', alt: 'Vlees snijden aan het spit op een feest' },
+		{ src: '/images/Vleesbobbijn-128.jpg', alt: 'Volle pita met verse sauzen' },
+		{ src: '/images/hero-pita-closeup.jpeg', alt: 'Close-up van een lekkere pita' },
+		{ src: '/images/Vleesbobbijn-155.jpg', alt: 'Gasten aan de grill' },
+		{ src: '/images/hero-tuin.jpeg', alt: 'de vleesbobijn setup in de tuin' },
+	];
+	let heroIndex = $state(0);
+	function heroNext() { heroIndex = (heroIndex + 1) % heroImages.length; }
+	function heroPrev() { heroIndex = (heroIndex - 1 + heroImages.length) % heroImages.length; }
+
+	const heroTimer = setInterval(heroNext, 5000);
+	onDestroy(() => clearInterval(heroTimer));
+
+	const pageTitle = 'de vleesbobijn — Pita & kebab grill huren in Deerlijk';
 	const pageDescription =
-		'Huur een pitta/kebab-grill voor jouw feest. Compleet pakket met vlees, broodjes en toebehoren. Regio Deerlijk, West-Vlaanderen.';
+		'Huur een pita/kebab-grill voor jouw feest. Compleet pakket met vlees, broodjes en toebehoren. Regio Deerlijk, West-Vlaanderen.';
 	const siteUrl = 'https://devleesbobijn.be';
 	const ogImage = `${siteUrl}/images/hero-3.webp`;
 
@@ -94,14 +110,40 @@
 			</div>
 		</div>
 
-		<!-- Rechts: foto met geel frame -->
+		<!-- Rechts: foto carousel met geel frame -->
 		<div class="relative hidden lg:block">
-			<img
-				src="/images/hero-3.webp"
-				alt="de vleesbobijn setup"
-				class="absolute inset-0 w-full h-full object-cover"
-				style="filter: saturate(1.1) contrast(1.05)"
-			/>
+			{#each heroImages as img, i}
+				<img
+					src={img.src}
+					alt={img.alt}
+					class="absolute inset-0 w-full h-full object-cover transition-opacity duration-700"
+					style="filter: saturate(1.1) contrast(1.05); opacity: {heroIndex === i ? 1 : 0}"
+				/>
+			{/each}
+
+			<!-- Vorige / volgende knoppen -->
+			<button
+				onclick={() => { heroPrev(); clearInterval(heroTimer); }}
+				aria-label="Vorige foto"
+				class="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-black/30 hover:bg-black/50 text-white flex items-center justify-center transition-colors"
+			>&#8249;</button>
+			<button
+				onclick={() => { heroNext(); clearInterval(heroTimer); }}
+				aria-label="Volgende foto"
+				class="absolute right-8 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-black/30 hover:bg-black/50 text-white flex items-center justify-center transition-colors"
+			>&#8250;</button>
+
+			<!-- Dots -->
+			<div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex gap-2">
+				{#each heroImages as _, i}
+					<button
+						onclick={() => heroIndex = i}
+						aria-label="Foto {i + 1}"
+						class="w-2 h-2 rounded-full transition-all {heroIndex === i ? 'bg-secondary w-5' : 'bg-white/50'}"
+					></button>
+				{/each}
+			</div>
+
 			<!-- Geel decoratief frame -->
 			<div
 				class="absolute inset-0 pointer-events-none"
@@ -152,7 +194,7 @@
 				<div class="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center text-3xl mb-5">🔪</div>
 				<h3 class="font-display text-xl mb-3 text-secondary">Zelf snijden</h3>
 				<p class="text-white/85 text-sm leading-relaxed">
-					Je bereidt je pitta zelf. Jij en je gasten snijden zelf het vlees af van het spit.
+					Je bereidt je pita zelf. Jij en je gasten snijden zelf het vlees af van het spit.
 					Interactief &amp; gezellig. Niemand vergeet dit feestje met dit unieke concept.
 				</p>
 			</div>
@@ -195,64 +237,54 @@
 	</div>
 </section>
 
-<!-- ── SECTIE 3: PAKKETTEN ── -->
+<!-- ── SECTIE 3: PAKKETTEN TEASER ── -->
 <section class="py-16 bg-white">
-	<div class="max-w-6xl mx-auto px-4">
-		<div class="text-center mb-12">
-			<h2 class="text-3xl md:text-4xl font-display mb-3">Onze pakketten</h2>
-			<p class="text-gray-600 max-w-xl mx-auto">
-				Kies het pakket dat past bij jouw feest. Van intiem tot groots.
+	<div class="max-w-5xl mx-auto px-4">
+		<div class="text-center mb-10">
+			<h2 class="text-3xl md:text-4xl font-display mb-3">Kip of kebab?</h2>
+			<p class="text-gray-600 max-w-lg mx-auto">
+				Voor elk feest hebben we het juiste pakket — van een intiem tuinfeest tot een groot communiefeest.
 			</p>
 		</div>
 
-		<!-- Kip -->
-		<div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
-			<div class="md:col-span-1">
-				<img src="/images/prijs-kip.webp" alt="Kip prijslijst" class="w-full rounded-2xl shadow-lg" />
-			</div>
-			<div class="md:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-4">
-				{#each chickenPackages as pkg}
-					<div class="bg-surface rounded-2xl p-6 border border-gray-200 hover:border-primary/30 hover:shadow-lg transition-all">
-						<div class="text-sm font-display text-primary mb-1 tracking-wide">{pkg.weightKg}kg</div>
-						<h4 class="font-display text-lg mb-2">{pkg.name}</h4>
-						<p class="text-gray-600 text-sm mb-3">{pkg.description}</p>
-						<p class="text-sm text-gray-500 mb-4">{pkg.includes}</p>
-						<div class="flex items-end justify-between">
-							<span class="text-2xl font-display text-primary">{formatPriceShort(pkg.price)}</span>
-							<span class="text-sm text-gray-500">{pkg.servesMin}-{pkg.servesMax} pers.</span>
-						</div>
+		<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+			<!-- Kip -->
+			<div class="relative overflow-hidden rounded-2xl bg-primary text-white">
+				<img src="/images/hero-pita-closeup.jpeg" alt="Kip pita" class="absolute inset-0 w-full h-full object-cover opacity-30" />
+				<div class="relative z-10 p-8">
+					<span class="inline-block bg-secondary text-primary-dark font-display text-xs tracking-widest uppercase px-3 py-1 rounded mb-4">Kip</span>
+					<h3 class="font-display text-2xl mb-2">Pita kip van het spit</h3>
+					<p class="text-white/80 text-sm mb-6">Sappige kipfilet aan het spit. Tot 15kg op stock, meer op aanvraag — voor 15 tot 120+ gasten.</p>
+					<div class="flex gap-2 flex-wrap">
+						{#each ['5kg · 15-20 pers.', '10kg · 30-40 pers.', '15kg · 45-60 pers.', '+40kg op aanvraag'] as badge}
+							<span class="bg-white/20 text-white text-xs font-display px-3 py-1 rounded-full">{badge}</span>
+						{/each}
 					</div>
-				{/each}
+				</div>
 			</div>
-		</div>
 
-		<!-- Kebab -->
-		<div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
-			<div class="md:col-span-1 md:order-last">
-				<img src="/images/prijs-kebab.webp" alt="Kebab prijslijst" class="w-full rounded-2xl shadow-lg" />
-			</div>
-			<div class="md:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-4">
-				{#each kebabPackages as pkg}
-					<div class="bg-surface rounded-2xl p-6 border border-gray-200 hover:border-primary/30 hover:shadow-lg transition-all">
-						<div class="text-sm font-display text-primary mb-1 tracking-wide">{pkg.weightKg}kg</div>
-						<h4 class="font-display text-lg mb-2">{pkg.name}</h4>
-						<p class="text-gray-600 text-sm mb-3">{pkg.description}</p>
-						<p class="text-sm text-gray-500 mb-4">{pkg.includes}</p>
-						<div class="flex items-end justify-between">
-							<span class="text-2xl font-display text-primary">{formatPriceShort(pkg.price)}</span>
-							<span class="text-sm text-gray-500">{pkg.servesMin}-{pkg.servesMax} pers.</span>
-						</div>
+			<!-- Kebab -->
+			<div class="relative overflow-hidden rounded-2xl bg-primary-dark text-white">
+				<img src="/images/Vleesbobbijn-155.jpg" alt="Kebab aan het spit" class="absolute inset-0 w-full h-full object-cover opacity-30" />
+				<div class="relative z-10 p-8">
+					<span class="inline-block bg-secondary text-primary-dark font-display text-xs tracking-widest uppercase px-3 py-1 rounded mb-4">Kebab</span>
+					<h3 class="font-display text-2xl mb-2">Durum kebab van het spit</h3>
+					<p class="text-white/80 text-sm mb-6">Klassieke gemengde kebab aan het spit. Tot 15kg op stock, meer op aanvraag — voor 15 tot 120+ gasten.</p>
+					<div class="flex gap-2 flex-wrap">
+						{#each ['5kg · 15-20 pers.', '10kg · 30-40 pers.', '15kg · 45-60 pers.', '+40kg op aanvraag'] as badge}
+							<span class="bg-white/20 text-white text-xs font-display px-3 py-1 rounded-full">{badge}</span>
+						{/each}
 					</div>
-				{/each}
+				</div>
 			</div>
 		</div>
 
 		<div class="text-center">
 			<a
-				href="/boeken"
-				class="inline-block bg-primary hover:bg-primary-dark text-white font-display px-8 py-4 rounded-xl text-lg transition-colors tracking-wide"
+				href="/aanbod"
+				class="inline-block bg-primary hover:bg-primary-dark text-white font-display px-10 py-4 rounded-xl text-lg transition-colors tracking-wide"
 			>
-				Boek nu jouw pakket
+				Ontdek alle pakketten & prijzen →
 			</a>
 		</div>
 	</div>

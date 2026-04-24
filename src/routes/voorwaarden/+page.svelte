@@ -1,11 +1,12 @@
 <svelte:head>
 	<title>Huurvoorwaarden - de vleesbobijn</title>
-	<meta name="description" content="Huurvoorwaarden voor de verhuur van pitta/kebab-grills bij de vleesbobijn." />
+	<meta name="description" content="Huurvoorwaarden voor de verhuur van pita/kebab-grills bij de vleesbobijn." />
 	<meta property="og:title" content="Huurvoorwaarden - de vleesbobijn" />
-	<meta property="og:description" content="Huurvoorwaarden voor de verhuur van pitta/kebab-grills bij de vleesbobijn." />
+	<meta property="og:description" content="Huurvoorwaarden voor de verhuur van pita/kebab-grills bij de vleesbobijn." />
 	<meta property="og:image" content="https://devleesbobijn.be/images/hero-3.webp" />
 	<meta property="og:url" content="https://devleesbobijn.be/voorwaarden" />
 	<meta property="og:type" content="website" />
+	<link rel="canonical" href="https://devleesbobijn.be/voorwaarden" />
 </svelte:head>
 
 <div class="max-w-3xl mx-auto px-4 py-12 prose prose-p:leading-relaxed">

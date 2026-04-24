@@ -11,6 +11,7 @@
 	<meta property="og:image" content="https://devleesbobijn.be/images/hero-3.webp" />
 	<meta property="og:url" content="https://devleesbobijn.be/contact" />
 	<meta property="og:type" content="website" />
+	<link rel="canonical" href="https://devleesbobijn.be/contact" />
 </svelte:head>
 
 <div class="max-w-6xl mx-auto px-4 py-12">
@@ -24,7 +25,7 @@
 			<h2 class="text-xl font-display mb-6">Stuur ons een bericht</h2>
 
 			{#if form?.success}
-				<div class="bg-green-50 border border-green-200 rounded-xl p-4 mb-6 text-green-800">
+				<div aria-live="polite" class="bg-green-50 border border-green-200 rounded-xl p-4 mb-6 text-green-800">
 					Bedankt voor je bericht! We nemen zo snel mogelijk contact met je op.
 				</div>
 			{/if}
@@ -71,7 +72,7 @@
 				</div>
 				<div class="bg-white rounded-xl p-6 border">
 					<h3 class="font-display text-base mb-2">✉️ E-mail</h3>
-					<a href="mailto:devleesbobijn@gmail.com" class="text-primary font-medium hover:underline">devleesbobijn@gmail.com</a>
+					<a href="mailto:devleesbobijn@gmail.com" class="text-primary font-display hover:underline">devleesbobijn@gmail.com</a>
 				</div>
 				<div class="bg-white rounded-xl p-6 border">
 					<h3 class="font-display text-base mb-2">🕐 Beschikbaarheid</h3>

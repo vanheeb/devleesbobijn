@@ -1,13 +1,13 @@
 <script lang="ts">
 	const faqs = [
-		{ q: 'Wat is de vleesbobijn?', a: 'de vleesbobijn is een origineel totaalconcept dat instaat voor de verhuur van een pitta/kebab-grill met vlees, broodjes, gas en al het nodige materiaal inbegrepen.' },
+		{ q: 'Wat is de vleesbobijn?', a: 'de vleesbobijn is een origineel totaalconcept dat instaat voor de verhuur van een pita/kebab-grill met vlees, broodjes, gas en al het nodige materiaal inbegrepen.' },
 		{ q: 'Wie doet het kookwerk?', a: 'Jouw gasten bereiden hun eigen eten! Ze kunnen zelf het vlees van het spit snijden. Dat maakt het interactief en super gezellig.' },
 		{ q: 'Voor welke gelegenheden is dit geschikt?', a: 'Communiefeesten, lentefeesten, verjaardagen, housewarming, babyborrels, trouwfeesten (avondsnack), vrijgezellenfeesten, tuinfeesten, bedrijfsfeesten... eigenlijk elk feest!' },
-		{ q: 'Welke pakketten bieden jullie aan?', a: 'Kip: €250 (5kg), €420 (10kg), €600 (15kg). Kebab: €260 (5kg), €440 (10kg), €630 (15kg). Combinatiepakketten zijn mogelijk op aanvraag.' },
-		{ q: 'Hoeveel personen per pakket?', a: '5kg = 15-20 personen, 10kg = 30-40 personen, 15kg = 45-60 personen. Dit zijn schattingen en hangt af van de portiegrootte.' },
+		{ q: 'Welke pakketten bieden jullie aan?', a: 'Kip: €250 (5kg), €420 (10kg), €600 (15kg). Kebab: €260 (5kg), €440 (10kg), €630 (15kg). Grotere hoeveelheden tot 40kg zijn mogelijk op aanvraag.' },
+		{ q: 'Hoeveel personen per pakket?', a: '5kg = 15-20 personen, 10kg = 30-40 personen, 15kg = 45-60 personen. Voor grotere feesten (tot 120+ gasten) kunnen we tot 40kg voorzien op aanvraag. Schattingen afhankelijk van portiegrootte.' },
 		{ q: 'Wat zit er allemaal in een pakket?', a: 'Grilltoestel met spit, elektrisch snijmes, gasfles, broodjes/durums, vlees en servetten. Sauzen zijn optioneel bij te bestellen aan €10 per liter.' },
 		{ q: 'Welke sauzen zijn er?', a: 'We hebben 10 soorten: Lookssaus, Cocktailsaus, Currysaus, Samuraisaus, Andalousesaus, Tartaarsaus, Bearnaissaus, Barbecuesaus, Hannibal saus en Mammoutsaus. Allemaal €10 per liter.' },
-		{ q: 'Wat moet ik zelf voorzien?', a: 'Enkel verse groenten als je die wilt bij je pitta. Denk aan sla, tomaat, ui, komkommer, etc.' },
+		{ q: 'Wat moet ik zelf voorzien?', a: 'Enkel verse groenten als je die wilt bij je pita. Denk aan sla, tomaat, ui, komkommer, etc.' },
 		{ q: 'Hoe zit het met de waarborg?', a: 'Er is een waarborg van €250 die wordt teruggestort bij een propere teruggave van het materiaal. Wordt het materiaal niet gereinigd teruggebracht, dan wordt er €100 reinigingskost aangerekend.' },
 		{ q: 'Is er levering aan huis?', a: 'Standaard is het ophalen en terugbrengen op ons adres: Achterstraat 20, 8540 Deerlijk. In uitzonderlijke gevallen kunnen we op aanvraag levering voorzien.' },
 		{ q: 'Hoe betaal ik?', a: 'Je betaalt een voorschot van €250 online via Stripe (veilige betaling). Het restbedrag betaal je bij ophaling.' },
@@ -36,6 +36,7 @@
 	<meta property="og:image" content="https://devleesbobijn.be/images/hero-3.webp" />
 	<meta property="og:url" content="https://devleesbobijn.be/faq" />
 	<meta property="og:type" content="website" />
+	<link rel="canonical" href="https://devleesbobijn.be/faq" />
 	{@html `<script type="application/ld+json">${JSON.stringify(faqJsonLd)}</` + `script>`}
 </svelte:head>
 
@@ -50,6 +51,8 @@
 			<div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
 				<button
 					onclick={() => toggle(i)}
+					aria-expanded={openIndex === i}
+					aria-controls="faq-answer-{i}"
 					class="w-full px-6 py-4 text-left font-display flex justify-between items-center hover:bg-gray-50 transition-colors"
 				>
 					<span>{faq.q}</span>
@@ -61,7 +64,7 @@
 					</svg>
 				</button>
 				{#if openIndex === i}
-					<div class="px-6 pb-4 text-gray-600 leading-relaxed">{faq.a}</div>
+					<div id="faq-answer-{i}" class="px-6 pb-4 text-gray-600 leading-relaxed">{faq.a}</div>
 				{/if}
 			</div>
 		{/each}

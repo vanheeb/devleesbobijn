@@ -1,11 +1,12 @@
 <svelte:head>
 	<title>Over ons - de vleesbobijn</title>
-	<meta name="description" content="Ontdek het verhaal achter de vleesbobijn. Gevestigd in Deerlijk, bedienen we feesten in heel West-Vlaanderen met een uniek pitta/kebab-concept." />
+	<meta name="description" content="Ontdek het verhaal achter de vleesbobijn. Gevestigd in Deerlijk, bedienen we feesten in heel West-Vlaanderen met een uniek pita/kebab-concept." />
 	<meta property="og:title" content="Over ons - de vleesbobijn" />
 	<meta property="og:description" content="Ontdek het verhaal achter de vleesbobijn. Gevestigd in Deerlijk, bedienen we feesten in heel West-Vlaanderen." />
 	<meta property="og:image" content="https://devleesbobijn.be/images/hero-3.webp" />
 	<meta property="og:url" content="https://devleesbobijn.be/over-ons" />
 	<meta property="og:type" content="website" />
+	<link rel="canonical" href="https://devleesbobijn.be/over-ons" />
 </svelte:head>
 
 <div class="max-w-4xl mx-auto px-4 py-12">
@@ -16,29 +17,34 @@
 	</div>
 
 	<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
-		<img src="/images/hero-1.webp" alt="Pitta broodje bij de vleesbobijn" class="w-full h-48 object-cover rounded-xl" />
-		<img src="/images/hero-3.webp" alt="Vlees aan het spit" class="w-full h-48 object-cover rounded-xl" />
-		<img src="/images/hero-4.webp" alt="Gasten genieten van de grill" class="w-full h-48 object-cover rounded-xl" />
-		<img src="/images/hero-2.webp" alt="Setup met sauzen" class="w-full h-48 object-cover rounded-xl" />
+		<img src="/images/Vleesbobbijn-115.jpg" alt="Vlees snijden aan het spit" class="w-full h-48 object-cover rounded-xl" />
+		<img src="/images/Vleesbobbijn-128.jpg" alt="Volle pita met sauzen" class="w-full h-48 object-cover rounded-xl" />
+		<img src="/images/Vleesbobbijn-155.jpg" alt="Gasten aan de grill" class="w-full h-48 object-cover rounded-xl" />
+		<img src="/images/hero-pita-closeup.jpeg" alt="Close-up van een lekkere pita" class="w-full h-48 object-cover rounded-xl" />
 	</div>
 
 	<div class="bg-white rounded-2xl p-8 border mb-6">
-		<h2 class="text-2xl font-display mb-4">Ons verhaal</h2>
+		<div class="flex flex-col md:flex-row gap-8 items-center mb-6">
+			<img src="/images/over-ons-oprichters.jpg" alt="De oprichters van de vleesbobijn" class="w-full md:w-64 h-64 object-cover rounded-2xl flex-shrink-0" />
+			<div>
+				<h2 class="text-2xl font-display mb-4">Ons verhaal</h2>
 		<p class="text-gray-700 leading-relaxed mb-4">
 			de vleesbobijn is ontstaan vanuit een simpel idee: wat als je de gezelligheid van een
-			pitta/kebab-zaak naar je eigen feest kon brengen? Geen gedoe met catering, geen dure kok,
+			pita/kebab-zaak naar je eigen feest kon brengen? Geen gedoe met catering, geen dure kok,
 			maar een interactieve belevenis waar je gasten zelf aan de slag gaan.
 		</p>
 		<p class="text-gray-700 leading-relaxed mb-4">
 			Met onze professionele grills en zorgvuldig samengestelde pakketten brengen we alles
 			wat je nodig hebt recht naar jouw feest. Het enige wat jij moet doen? De verse groenten
-			voorzien en genieten van je gasten die zelf hun pitta samenstellen.
+			voorzien en genieten van je gasten die zelf hun pita samenstellen.
 		</p>
 		<p class="text-gray-700 leading-relaxed">
 			Gevestigd in het hart van Deerlijk, bedienen we feesten in heel de regio.
 			Van kleine verjaardagen tot grote communiefeesten — wij hebben het juiste pakket
 			voor elke gelegenheid.
 		</p>
+			</div>
+		</div>
 	</div>
 
 	<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">

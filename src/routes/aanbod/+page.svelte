@@ -10,12 +10,13 @@
 
 <svelte:head>
 	<title>Aanbod & Prijzen - de vleesbobijn</title>
-	<meta name="description" content="Bekijk onze pitta en kebab pakketten. Kip vanaf €250, kebab vanaf €260. Inclusief grill, vlees, broodjes en gas. Prijzen zijn excl. BTW." />
+	<meta name="description" content="Bekijk onze pita en kebab pakketten. Kip vanaf €250, kebab vanaf €260. Inclusief grill, vlees, broodjes en gas. Prijzen zijn excl. BTW." />
 	<meta property="og:title" content="Aanbod & Prijzen - de vleesbobijn" />
-	<meta property="og:description" content="Bekijk onze pitta en kebab pakketten. Kip vanaf €250, kebab vanaf €260. Inclusief grill, vlees, broodjes en gas." />
+	<meta property="og:description" content="Bekijk onze pita en kebab pakketten. Kip vanaf €250, kebab vanaf €260. Inclusief grill, vlees, broodjes en gas." />
 	<meta property="og:image" content="https://devleesbobijn.be/images/hero-3.webp" />
 	<meta property="og:url" content="https://devleesbobijn.be/aanbod" />
 	<meta property="og:type" content="website" />
+	<link rel="canonical" href="https://devleesbobijn.be/aanbod" />
 </svelte:head>
 
 <div class="max-w-6xl mx-auto px-4 py-12">
@@ -24,6 +25,7 @@
 		<p class="text-gray-600 max-w-xl mx-auto">
 			Een heerlijke vleesbobijn voor een eerlijke prijs. Al onze prijzen zijn vrijgesteld van BTW.
 		</p>
+		<p class="text-sm text-gray-500 mt-2">Standaard tot 15kg op stock. Tot 40kg (120+ gasten) beschikbaar op aanvraag.</p>
 	</div>
 
 	<!-- Productafbeeldingen -->
@@ -78,12 +80,23 @@
 		{/each}
 	</div>
 
+	<!-- Grote groepen -->
+	<div class="bg-primary rounded-2xl p-8 mb-12 text-white flex flex-col md:flex-row items-center justify-between gap-6">
+		<div>
+			<h3 class="font-display text-xl mb-1">Meer dan 60 gasten?</h3>
+			<p class="text-white/80 text-sm">Tot 40kg vlees (120+ personen) is mogelijk op aanvraag. Neem contact op voor een offerte op maat.</p>
+		</div>
+		<a href="/contact" class="flex-shrink-0 bg-secondary text-primary-dark font-display px-6 py-3 rounded-xl hover:bg-secondary-dark transition-colors whitespace-nowrap">
+			Vraag een offerte aan
+		</a>
+	</div>
+
 	<!-- Wat zit erin -->
 	<div class="bg-primary/5 rounded-2xl p-8 mb-12">
 		<h2 class="text-2xl font-display mb-4">Wat zit er in elk pakket?</h2>
 		<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 			{#each [
-				'Pitta/kebab-grill met spit',
+				'Pita/kebab-grill met spit',
 				'Vlees (kip of kebab)',
 				'Broodjes en/of durums',
 				'Elektrisch snijmes',
@@ -110,18 +123,6 @@
 		{/each}
 	</div>
 
-	<!-- Extra materiaal -->
-	{#if equipment.length > 0}
-		<h2 class="text-2xl font-display mb-4">Extra materiaal</h2>
-		<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
-			{#each equipment as item}
-				<div class="bg-white rounded-xl p-4 border flex justify-between items-center">
-					<span class="font-medium">{item.name}</span>
-					<span class="text-primary font-display">{formatPriceShort(item.pricePerUnit)}/{item.unit}</span>
-				</div>
-			{/each}
-		</div>
-	{/if}
 
 	<!-- Waarborg -->
 	<div class="bg-secondary/10 rounded-2xl p-8 mb-8">
