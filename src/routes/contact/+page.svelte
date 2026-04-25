@@ -4,6 +4,7 @@
 	let { form } = $props();
 
 	let formLoadedAt = $state(0);
+	let submitting = $state(false);
 	onMount(() => { formLoadedAt = Date.now(); });
 </script>
 
@@ -34,7 +35,10 @@
 				</div>
 			{/if}
 
-			<form method="POST" use:enhance class="space-y-4">
+			<form method="POST" use:enhance={() => {
+				submitting = true;
+				return async ({ update }) => { await update(); submitting = false; };
+			}} class="space-y-4">
 				<!-- Anti-spam -->
 				<input type="text" name="website" tabindex="-1" autocomplete="off" style="display:none" />
 				<input type="hidden" name="formLoadedAt" value={formLoadedAt} />
@@ -58,9 +62,12 @@
 					<textarea id="message" name="message" rows="5" required
 						class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition resize-y"></textarea>
 				</div>
-				<button type="submit"
-					class="w-full bg-primary hover:bg-primary-dark text-white font-display py-3 px-6 rounded-xl transition-colors">
-					Verstuur bericht
+				{#if form?.error}
+					<div class="bg-red-50 border border-red-200 rounded-xl p-4 text-red-700 text-sm">{form.error}</div>
+				{/if}
+				<button type="submit" disabled={submitting}
+					class="w-full bg-primary hover:bg-primary-dark disabled:bg-gray-300 text-white font-display py-3 px-6 rounded-xl transition-colors">
+					{submitting ? 'Verzenden...' : 'Verstuur bericht'}
 				</button>
 			</form>
 		</div>

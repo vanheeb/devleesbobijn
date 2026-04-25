@@ -59,10 +59,11 @@ export const actions = {
 				message: data.message.trim()
 			});
 
-			await Promise.all([
+			// Emails zijn non-blocking: fout in verzending blokkeert de submit niet
+			Promise.all([
 				sendContactNotification(data),
 				sendContactAutoReply({ name: data.name, email: data.email })
-			]);
+			]).catch((err) => console.error('Contact email failed:', err));
 
 			return { success: true };
 		} catch (err) {
