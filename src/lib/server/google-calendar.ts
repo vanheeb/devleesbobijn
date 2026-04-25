@@ -51,10 +51,15 @@ export async function createBookingEvent(booking: BookingEventData): Promise<voi
 		.join('\n');
 
 	try {
+		const parts = [booking.customerName];
+		if (booking.eventType) parts.push(booking.eventType);
+		if (booking.guestCount) parts.push(`${booking.guestCount} pers.`);
+		const summary = `[Webshop] ${parts.join(' – ')}`;
+
 		await calendar.events.insert({
 			calendarId,
 			requestBody: {
-				summary: `${booking.reference} – ${booking.customerName} – ${booking.packageName}`,
+				summary,
 				description,
 				start: { date: booking.rentalDate },
 				end: { date: booking.rentalDate },
@@ -95,7 +100,7 @@ export async function getBlockedDatesForMonth(
 
 		for (const event of events) {
 			const title = event.summary ?? '';
-			if (title.match(/^VB-\d{4}-\d{4}/)) continue; // skip our own booking events
+			if (title.startsWith('[Webshop]')) continue; // skip our own booking events
 
 			// Get the date (all-day events use event.start.date, timed events use event.start.dateTime)
 			const dateStr = event.start?.date ?? event.start?.dateTime?.slice(0, 10);

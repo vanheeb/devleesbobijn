@@ -78,8 +78,7 @@ export async function sendBookingConfirmation(booking: Booking) {
 <div style="background:#FFF8E7;border-radius:8px;padding:16px 20px;margin:20px 0;">
 <p style="margin:0 0 8px;"><strong>Referentie:</strong> ${booking.reference}</p>
 <p style="margin:0 0 8px;"><strong>Datum:</strong> ${formatDate(booking.rentalDate)}</p>
-<p style="margin:0 0 8px;"><strong>Totaal:</strong> ${formatPrice(booking.totalAmount)}</p>
-<p style="margin:0;"><strong>Voorschot betaald:</strong> ${formatPrice(booking.deposit)}</p>
+<p style="margin:0;"><strong>Totaal betaald:</strong> ${formatPrice(booking.totalAmount)}</p>
 </div>
 
 <h3 style="color:#7B2D8E;margin:24px 0 8px;">📍 Ophaaladres</h3>
@@ -87,7 +86,7 @@ export async function sendBookingConfirmation(booking: Booking) {
 
 <h3 style="color:#7B2D8E;margin:24px 0 8px;">⚠️ Belangrijk</h3>
 <ul style="padding-left:20px;margin:0;">
-<li>Waarborg ${formatPrice(pricingConfig.depositCents)} wordt teruggestort bij propere teruggave.</li>
+<li>Breng het toestel <strong>proper gereinigd</strong> terug voor terugstorting van de waarborg (${formatPrice(pricingConfig.depositCents)}).</li>
 <li>Reinigingskost ${formatPrice(pricingConfig.cleaningFeeCents)} indien het toestel niet gereinigd wordt teruggebracht.</li>
 <li>Vergeet je verse groenten niet!</li>
 </ul>
@@ -112,7 +111,7 @@ export async function sendBookingConfirmation(booking: Booking) {
 			`<h2 style="margin:0 0 16px;color:#7B2D8E;">Nieuwe bevestigde boeking</h2>
 <p><strong>${booking.customerName}</strong> heeft ${booking.reference} geboekt voor ${formatDate(booking.rentalDate)}.</p>
 <p>Telefoon: ${booking.customerPhone}<br/>E-mail: ${booking.customerEmail}</p>
-<p>Totaal: ${formatPrice(booking.totalAmount)} (voorschot ${formatPrice(booking.deposit)} ontvangen).</p>
+<p>Totaal betaald: ${formatPrice(booking.totalAmount)}.</p>
 <p><a href="${env.PUBLIC_SITE_URL}/admin/boekingen/${booking.id}" style="color:#7B2D8E;">Bekijk boeking in admin</a></p>`,
 			{ title: `Nieuwe boeking ${booking.reference}` }
 		)
