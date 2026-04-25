@@ -1,6 +1,10 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import { onMount } from 'svelte';
 	let { form } = $props();
+
+	let formLoadedAt = $state(0);
+	onMount(() => { formLoadedAt = Date.now(); });
 </script>
 
 <svelte:head>
@@ -31,6 +35,9 @@
 			{/if}
 
 			<form method="POST" use:enhance class="space-y-4">
+				<!-- Anti-spam -->
+				<input type="text" name="website" tabindex="-1" autocomplete="off" style="display:none" />
+				<input type="hidden" name="formLoadedAt" value={formLoadedAt} />
 				<div>
 					<label for="name" class="block text-sm font-medium mb-1">Naam *</label>
 					<input type="text" id="name" name="name" required
