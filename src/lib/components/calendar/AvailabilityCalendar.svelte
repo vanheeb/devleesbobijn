@@ -2,7 +2,7 @@
 	import { MONTH_NAMES, DAY_NAMES, getDaysInMonth, getFirstDayOfMonth, toISODate } from '$lib/utils/dates';
 	import { bookingConfig } from '$lib/config';
 
-	type AvailabilityMap = Record<string, { available: number; total: number; bufferSide?: string | null; bufferFull?: boolean }>;
+	type AvailabilityMap = Record<string, { available: number; total: number }>;
 
 	let {
 		selectedDate = $bindable(''),
@@ -75,20 +75,6 @@
 		return 'available';
 	}
 
-	// Returns inline style for half-day buffer cells
-	function getBufferStyle(dateStr: string, status: string): string {
-		if (status !== 'limited') return '';
-		const data = availability[dateStr];
-		if (!data?.bufferSide || data.bufferSide === 'full') return '';
-		const green = '#f0fdf4';
-		const occupied = data.bufferFull ? '#fef2f2' : '#fffbeb'; // red-50 when adjacent day is full, amber-50 when limited
-		// right = prep before rental: green top-left / occupied bottom-right
-		if (data.bufferSide === 'right') return `background: linear-gradient(135deg, ${green} 50%, ${occupied} 50%)`;
-		// left = return after rental: occupied top-left / green bottom-right
-		if (data.bufferSide === 'left')  return `background: linear-gradient(135deg, ${occupied} 50%, ${green} 50%)`;
-		return '';
-	}
-
 	function handleSelect(day: number) {
 		const dateStr = getDateStr(day);
 		const status = getStatus(dateStr);
@@ -150,16 +136,13 @@
 			{@const dateStr = getDateStr(day)}
 			{@const status = getStatus(dateStr)}
 			{@const isSelected = dateStr === selectedDate}
-			{@const bufferStyle = getBufferStyle(dateStr, status)}
 			<button
 				onclick={() => handleSelect(day)}
 				disabled={status === 'past' || status === 'full'}
-				style={isSelected ? '' : bufferStyle}
 				class="aspect-square rounded-lg text-sm font-medium flex items-center justify-center transition-all
 					{status === 'past' ? 'text-gray-300 cursor-not-allowed' : ''}
 					{status === 'full' ? 'bg-red-50 text-red-300 cursor-not-allowed' : ''}
-					{status === 'limited' && !bufferStyle ? 'bg-amber-50 text-amber-700 hover:bg-amber-100 cursor-pointer' : ''}
-					{status === 'limited' && bufferStyle ? 'text-amber-700 hover:bg-amber-50 cursor-pointer' : ''}
+					{status === 'limited' ? 'bg-amber-50 text-amber-700 hover:bg-amber-100 cursor-pointer' : ''}
 					{status === 'available' ? 'bg-green-50 text-green-700 hover:bg-green-100 cursor-pointer' : ''}
 					{isSelected ? 'ring-2 ring-primary bg-primary text-white hover:bg-primary-dark' : ''}"
 			>
@@ -177,10 +160,6 @@
 		<div class="flex items-center gap-1.5">
 			<div class="w-3 h-3 rounded bg-amber-50 border border-amber-200"></div>
 			<span>Nog 1 vrij</span>
-		</div>
-		<div class="flex items-center gap-1.5">
-			<div class="w-3 h-3 rounded border border-amber-200" style="background: linear-gradient(135deg, #f0fdf4 50%, #fffbeb 50%)"></div>
-			<span>Halve dag</span>
 		</div>
 		<div class="flex items-center gap-1.5">
 			<div class="w-3 h-3 rounded bg-red-50 border border-red-200"></div>
